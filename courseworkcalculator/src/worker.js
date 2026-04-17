@@ -133,8 +133,8 @@ export default {
           <p> A Coursework & GPA tracking tool for both students & professors. </p>
           <div class="badge"> API is running </div> 
           <p class="team"> Group Two: Adam || Mason || Angie || Mackenzie </p> 
-          <p class="nxtSprint"> Next Sprint: Begin adding Frontend components, importing & exporting, grade scaling, and search bar functionality.</p> 
-          <p class="simBttn"> <a href="/simulation.html"> View GPA Simulation </a>
+          <p class="nxtSprint"> Next Sprint Three: Begin adding final UI/UX components, importing & exporting, multi-instiutional support, grade scaling, and search bar functionality.</p> 
+          <p class="simBttn"> <a href="/simulationModel.html"> View GPA Simulation → </a>
           <footer>
              <div class="foot"> CSCI 3300 || Dr. Porter || UNG 2026 </div>
             <div class="foot"> <a href="mailto:mmjohn3601@ung.edu"> mmjohn3601@ung.edu </a> </div>
