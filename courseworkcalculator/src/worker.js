@@ -28,7 +28,7 @@ export default {
 
     if (url.pathname === '/' && method === 'GET') {
     
-    // Display simple HTML for Sprint One! 
+    // Display simple HTML for Sprint Two! 
     const html = `
         <!DOCTYPE html> 
         <html lang="en">
@@ -104,6 +104,18 @@ export default {
 
         }
         
+        .simBttn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 1.5rem;
+            background: #818cf8;
+            color: #66c2ff;
+            border: 2px solid #e6b800;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
         .nxtSprint {
             margin-top: 2rem; 
             background: #003399;
@@ -121,7 +133,8 @@ export default {
           <p> A Coursework & GPA tracking tool for both students & professors. </p>
           <div class="badge"> API is running </div> 
           <p class="team"> Group Two: Adam || Mason || Angie || Mackenzie </p> 
-          <p class="nxtSprint"> Next Sprint: Connect to Wrangler CLI & GitHub. Add Folders, Courses, & Assignments. Also add Grade & GPA logic calculations.</p> 
+          <p class="nxtSprint"> Next Sprint: Begin adding Frontend components, importing & exporting, grade scaling, and search bar functionality.</p> 
+          <p class="simBttn"> <a href="/simulation.html"> View GPA Simulation </a>
           <footer>
              <div class="foot"> CSCI 3300 || Dr. Porter || UNG 2026 </div>
             <div class="foot"> <a href="mailto:mmjohn3601@ung.edu"> mmjohn3601@ung.edu </a> </div>
@@ -142,7 +155,7 @@ export default {
       const sample = createAssignment({ name: 'Midterm Exam', weight: 20, grade: 88 });
       return new Response(JSON.stringify([sample]), { headers });
     }
-    
+        
     if (url.pathname === '/api/course-average' && method === 'POST') {
         const body = await request.json();
         const avg = calculateCourseAverage(body.assignments);
@@ -150,7 +163,7 @@ export default {
     }
     
     if (url.pathname === '/api/target-grade' && method === 'POST') {
-         const body = await request.json();
+        const body = await request.json();
         const required = requiredScoreForTarget(body.current, body.finalWeight, body.target);
         const simulation = generateSimulation(body.current, body.finalWeight);
         return new Response(JSON.stringify({ requiredScore: required, simulation }), { headers });
