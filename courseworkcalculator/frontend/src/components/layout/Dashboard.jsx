@@ -15,8 +15,7 @@ Displays the Main Top Navigation — Home | Search | GitHub | Settings
 // Import all assets, functions & packages 
 import { useState, useEffect, useRef } from 'react';
 import SearchBar    from '../search/SearchBar';
-import githubIcon   from '../../assets/github.svg';
-import settingsIcon from '../../assets/settings.svg';
+import Icon from '../../utils/Icon';
 
 /* MAIN DASHBOARD */
 export default function Dashboard({
@@ -68,12 +67,14 @@ export default function Dashboard({
 
   return (
     <nav style={{
-      background:   '#000066',
-      borderBottom: '2px solid #e6b800',
-      padding:      '0.65rem 1.25rem',
-      display:      'flex',
-      alignItems:   'center',
-      gap:          '0.75rem',
+         background:     '#000066',
+        borderBottom:   '2px solid #e6b800',
+        padding:        '0.65rem 1.25rem',
+        display:        'grid',
+        gridTemplateColumns: 'auto 1fr auto auto',
+        alignItems:     'center',
+        gap:            '0.75rem',
+        minHeight:      '52px',
     }}>
 
       {/* Home */}
@@ -85,8 +86,8 @@ export default function Dashboard({
           gap:          '6px',
           background:   '#818cf8',
           color:        '#000066',
-          padding:      '0.4rem 0.9rem',
-          borderRadius: '6px',
+          padding:      '0.45rem 1rem',
+          borderRadius: '8px',
           border:       '2px solid #e6b800',
           fontWeight:   '500',
           fontSize:     '0.85rem',
@@ -94,8 +95,10 @@ export default function Dashboard({
           whiteSpace:   'nowrap',
         }}
       >
-        📚 Home
-      </button>
+     <Icon name="home" size={16} color="dark" />
+        Home 
+
+        </button>
 
       {/*  Search  */}
       <div style={{ flex: 1 }}>
@@ -129,8 +132,8 @@ export default function Dashboard({
           background:     '#1e293b',
         }}
       >
-        <img src={githubIcon} alt="GitHub" width="14" height="14"
-          style={{ filter: iconFilter }} />
+       <Icon name="github" size={14} color="blue" />
+
         GitHub
       </a>
 
@@ -152,8 +155,8 @@ export default function Dashboard({
             whiteSpace:   'nowrap',
           }}
         >
-          <img src={settingsIcon} alt="Settings" width="14" height="14"
-            style={{ filter: iconFilter }} />
+         <Icon name="settings" size={14} color="blue" />
+         
           Settings ▾
         </button>
 

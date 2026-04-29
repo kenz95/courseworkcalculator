@@ -11,6 +11,7 @@ Mason
 */
 
 /* components/assignments/AssignmentList.jsx - Assignment items with grade editing */
+import Icon from '../../utils/Icon';
 
 export default function AssignmentList({ 
     assignments = [],
@@ -39,7 +40,7 @@ export default function AssignmentList({
                 <h2 className="section-title">Assignments</h2>
                 <div className="button-group">
                     <button onClick={onOpenWeightModal} className="settings-button">
-                        ⚙️ Set Assignment Weights
+                        <Icon name="settings" size={14} color="white" /> Set Assignment Weights
                     </button>
                     <button onClick={onAddAssignment} className="add-button">
                         + Add Assignment

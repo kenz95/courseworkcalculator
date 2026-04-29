@@ -12,6 +12,7 @@ SearchBar.jsx - Holds the search bar to find courses and/or assignments
 
 // Import all packages 
 import { useState } from 'react';
+import Icon from '../../utils/Icon';
 
 /* SEARCH BAR  */ 
 export default function SearchBar({ courses = [], assignments = [], folders = [], onSelectResult }) {
@@ -58,25 +59,42 @@ export default function SearchBar({ courses = [], assignments = [], folders = []
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', maxWidth: '500px' }}>
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => handleSearch(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setTimeout(() => setFocused(false), 200)}
-        placeholder="🔍 Search for semesters, courses, assignments..."
-        style={{
-          width:        '100%',
-          padding:      '0.6rem 1rem',
-          borderRadius: '8px',
-          border:       '1px solid #334155',
-          background:   '#1e293b',
-          color:        '#f1f5f9',
-          fontSize:     '0.9rem',
-          outline:      'none',
-        }}
-      />
+        <div style={{ 
+            position: 'relative', 
+            width:    '100%',
+        }}>
+        <div style={{
+            position:      'absolute',
+            left:          '0.65rem',
+            top:           '50%',
+            transform:     'translateY(-50%)',
+            display:       'flex',
+            alignItems:    'center',
+            pointerEvents: 'none',
+            zIndex:        2,
+        }}>
+            <Icon name="search" size={14} color="muted" />
+        </div>
+
+        <input
+            type="text"
+            value={query}
+            onChange={(e) => handleSearch(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setTimeout(() => setFocused(false), 200)}
+            placeholder="Search for: semesters, courses, or assignments..."
+            style={{
+                width:        '100%',
+                padding:      '0.55rem 1rem 0.55rem 2.2rem',
+                borderRadius: '8px',
+                border:       '1px solid #334155',
+                background:   '#1e293b',
+                color:        '#f1f5f9',
+                fontSize:     '0.85rem',
+                outline:      'none',
+                boxSizing:    'border-box',
+            }}
+        />
 
       {focused && results.length > 0 && (
         <div style={{

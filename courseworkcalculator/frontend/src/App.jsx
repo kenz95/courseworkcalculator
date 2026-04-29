@@ -20,7 +20,8 @@ import WeightModal from './components/assignments/WeightModal';
 import SimulationInterface from './components/simulation/gpaSimulationInterface';
 import AlertsList from './components/alerts/AlertsList';
 import GradeScalingModal from './components/folders/GradeScalingModal';
-import ImportExport from './components/settings/ImportExport';
+import Icon from './utils/Icon';
+import { exportToJSON, importFromJSON } from './data/localStorageManager';
 import { calculateSemesterGPA } from './logic/gpaCalculator';
 import { calculateCourseGrade } from './logic/gradeCalculator';
 
@@ -183,7 +184,7 @@ export default function App({
                 />
 
             <div className="container">
-                <h1 className="title">Coursework Tracker & GPA Calculator</h1>
+                <h1 className="title"> Coursework Tracker & GPA Calculator </h1>
                 
                 <div className="section">
                     <div className="section-header">
@@ -204,10 +205,6 @@ export default function App({
                         onDismiss={onDismissAlert}
                     />
                     
-                    <ImportExport
-                        appState={{ courses, assignments, folders }}
-                        onImport={onImport}
-                    />
 
                 </div>
             </div>
@@ -247,7 +244,17 @@ export default function App({
                 />
 
             <div className="container">
-                <button onClick={handleBackToSemesters} className="back-button">← Back to Semesters</button>
+               <button onClick={handleBackToSemesters}
+                    className="back-button"
+                    style={{
+                        display:      'flex',
+                        alignItems:   'center',
+                        gap:          '6px',
+                    }}
+                >
+                    <Icon name="back" size={14} color="white" />
+                    Back to Semesters
+                </button>
                 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '12px', flexWrap: 'wrap' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
@@ -264,23 +271,34 @@ export default function App({
                                 alignItems: 'center',
                                 gap: '8px'
                             }}>
-                                <span>📊</span>
+                                <span><Icon name="chart" size={18} color="white" /></span>
                                 <span>GPA: {semesterGPA}</span>
                             </div>
                         )}
                     </div>
                     <div style={{ display: 'flex', gap: '10px' }}>
-                        <button 
-                            onClick={() => setShowScaleModal(true)} 
-                            className="settings-button"
+                        <button onClick={() => setShowScaleModal(true)}
+                         className="settings-button"
+                            style={{
+                                display:    'flex',
+                                alignItems: 'center',
+                                gap:        '6px',
+                            }}
                         >
-                            ⚙️ Scaling
+                            <Icon name="settings" size={14} color="white" />
+                                Scaling
                         </button>
-                        <button 
-                            onClick={() => setShowGpaSim(true)} 
+
+                        <button onClick={() => setShowGpaSim(true)}
                             className="add-button"
+                            style={{
+                                display:    'flex',
+                                alignItems: 'center',
+                                gap:        '6px',
+                            }}
                         >
-                            📊 GPA Simulation
+                             <Icon name="chart" size={14} color="white" />
+                                GPA Simulation
                         </button>
                     </div>
                 </div>
@@ -359,7 +377,17 @@ export default function App({
                 />
 
             <div className="container">
-                <button onClick={handleBackToCourses} className="back-button">← Back to Courses</button>
+                <button onClick={handleBackToCourses}
+                    className="back-button"
+                    style={{
+                        display:    'flex',
+                        alignItems: 'center',
+                        gap:        '6px',
+                    }}
+                >
+                    <Icon name="back" size={14} color="white" />
+                        Back to Courses
+                </button>
                 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px', flexWrap: 'wrap' }}>
                     <h1 className="title" style={{ marginBottom: 0 }}>{currentCourse?.name}</h1>
@@ -375,7 +403,7 @@ export default function App({
                             alignItems: 'center',
                             gap: '8px'
                         }}>
-                            <span>📝</span>
+                            <span><Icon name="grade" size={18} color="white" /></span>
                             <span>Grade: {courseGrade}%</span>
                         </div>
                     )}

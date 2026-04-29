@@ -6,7 +6,8 @@ CSCI 3300
 
 FolderManager.jsx 
 
-Mason
+Mason & 
+Edit by Mackenzie for updated UI/UX & any connections
 
 */
 
@@ -78,21 +79,35 @@ export default function FolderManager({
                             style={{ position: 'relative' }}
                         >
                             <div style={{ paddingRight: '30px' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                                    <div className="card-title" style={{ fontSize: '16px', fontWeight: '500' }}>{folder.name}</div>
-                                    {semesterGPA && (
-                                        <div style={{ 
-                                            backgroundColor: '#6366f1', 
-                                            color: 'white', 
-                                            padding: '2px 8px', 
-                                            borderRadius: '12px',
-                                            fontSize: '12px',
-                                            fontWeight: '600'
-                                        }}>
-                                            GPA: {semesterGPA}
-                                        </div>
-                                    )}
-                                </div>
+                               <div style={{ 
+                                    display:        'flex', 
+                                    justifyContent: 'space-between', 
+                                    alignItems:     'center', 
+                                    marginBottom:   '8px',
+                                    gap:            '8px',        
+                                }}>
+                            <div className="card-title" style={{ 
+                                fontSize:   '16px', 
+                                fontWeight: '500',
+                                flex:       1,              
+                            }}>
+                            {folder.name}
+                        </div>
+                            {semesterGPA && (
+                                 <div style={{ 
+                                    backgroundColor: '#6366f1', 
+                                    color:           'white', 
+                                    padding:         '4px 10px',   
+                                    borderRadius:    '12px',
+                                    fontSize:        '12px',
+                                    fontWeight:      '600',
+                                    whiteSpace:      'nowrap',     
+                                    flexShrink:      0,            
+                                }}>
+                                GPA: {semesterGPA}
+                            </div>
+                            )}
+                        </div>
                                 <div style={{ marginBottom: '8px' }}>
                                     {semesterCourses.length === 0 ? (
                                         <span className="card-subtitle">No courses yet</span>
