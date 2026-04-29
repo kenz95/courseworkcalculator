@@ -12,7 +12,7 @@ Edits by Mackenzie for imports & connecting all team member's code
 /* App.jsx - Main Dashboard component - controls which view (semesters/courses/assignments) is shown */
 
 import { useState } from 'react';
-import { fetchCourseAverage, checkAPIStatus } from './data/apiService';
+import Dashboard from './components/layout/Dashboard';
 import FolderManager from './components/folders/FolderManager';
 import CourseList from './components/courses/CourseList';
 import AssignmentList from './components/assignments/AssignmentList';
@@ -30,6 +30,9 @@ export default function App({
     folders = [],        
     courses = [], 
     assignments = [],
+    alerts = [],
+    onDismissAlert,
+    onImport,
     onAddFolder,
     onUpdateFolder,
     onDeleteFolder,
@@ -154,6 +157,23 @@ export default function App({
     // ========== SEMESTERS VIEW ==========
     if (view === 'semesters') {
         return (
+            <>
+                <Dashboard
+                    courses={courses}
+                    assignments={assignments}
+                    folders={folders}
+                    onSelectResult={(result) => {
+                        if (result.type === 'Semester') handleOpenSemester(result.id);
+                        if (result.type === 'Course') {
+                            const course = courses.find(c => c.id === result.id);
+                            if (course) {
+                                handleOpenSemester(course.folderID);
+                                setTimeout(() => handleOpenCourse(result.id), 100);
+                            }
+                        }
+                    }}
+                />
+
             <div className="container">
                 <h1 className="title">Coursework Tracker & GPA Calculator</h1>
                 
@@ -171,20 +191,19 @@ export default function App({
                         onEditFolder={onUpdateFolder}
                         onDeleteFolder={onDeleteFolder}
                     />
-                    <AlertsList 
-                         alerts={[]} 
-                        onDismiss={() => {}} 
+                    <AlertsList
+                        alerts={alerts}
+                        onDismiss={onDismissAlert}
                     />
+                    
                     <ImportExport
-                         appState={{ courses, assignments, folders }}
-                        onImport={(data) => {
-                            if (data.folders)     setFolders(data.folders);
-                            if (data.courses)     setCourses(data.courses);
-                            if (data.assignments) setAssignments(data.assignments);
-                         }}
+                        appState={{ courses, assignments, folders }}
+                        onImport={onImport}
                     />
+
                 </div>
             </div>
+        </>
         );
     }
 
@@ -193,6 +212,17 @@ export default function App({
         const semesterGPA = calculateSemesterGPA(semesterCourses, assignments, semesterGradeScale);
         
         return (
+            <> 
+                <Dashboard
+                    courses={courses}
+                    assignments={assignments}
+                    folders={folders}
+                    onSelectResult={(result) => {
+                        if (result.type === 'Semester') handleOpenSemester(result.id);
+                        if (result.type === 'Course') handleOpenCourse(result.id);
+                    }}
+                />
+
             <div className="container">
                 <button onClick={handleBackToSemesters} className="back-button">← Back to Semesters</button>
                 
@@ -270,6 +300,7 @@ export default function App({
                     semesterName={currentFolder?.name}
                 />
             </div>
+        </> 
         );
     }
 
@@ -278,6 +309,17 @@ export default function App({
         const courseGrade = calculateCourseGrade(courseAssignments);
         
         return (
+            <> 
+                <Dashboard
+                    courses={courses}
+                    assignments={assignments}
+                    folders={folders}
+                    onSelectResult={(result) => {
+                        if (result.type === 'Semester') handleOpenSemester(result.id);
+                        if (result.type === 'Course') handleOpenCourse(result.id);
+                    }}
+                />
+
             <div className="container">
                 <button onClick={handleBackToCourses} className="back-button">← Back to Courses</button>
                 
@@ -320,6 +362,7 @@ export default function App({
                     courseName={currentCourse?.name}
                 />
             </div>
+         </>
         );
     }
 

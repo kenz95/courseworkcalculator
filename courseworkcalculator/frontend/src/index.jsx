@@ -18,6 +18,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { createInitialState, serializeState, deserializeState } from './data/localStorageManager';
 import { createFolder, createCourse, createAssignment } from './models/index.js';
 import { checkAPIStatus } from './data/apiService';
+import { runAllAlertChecks } from './logic/alertGenerator';
 import './App.css';
 
 const STORAGE_KEY = 'coursework_calculator_v1';
@@ -26,6 +27,13 @@ function MainApp() {
     const [folders, setFolders] = useState([]);
     const [courses, setCourses] = useState([]);
     const [assignments, setAssignments] = useState([]);
+    const [alerts, setAlerts] = useState([]);
+
+    const handleImport = (data) => {
+        if (data.folders)     setFolders(data.folders);
+        if (data.courses)     setCourses(data.courses);
+        if (data.assignments) setAssignments(data.assignments);
+    };
 
     // When the app first loads, grab whatever was saved in localStorage
     useEffect(() => {
@@ -55,6 +63,18 @@ function MainApp() {
             console.log('API status:', online ? 'Connected ✅' : 'Offline ❌');
         });
     }, []);
+
+    // Run alert checks whenever courses or assignments change
+    useEffect(() => {
+        if (courses.length === 0) return;
+
+            const newAlerts = runAllAlertChecks(courses, assignments, alerts);
+        if (newAlerts.length > 0) {
+
+            setAlerts(prev => [...prev, ...newAlerts]);
+        }
+        
+    }, [courses, assignments]);
 
     // Semester handlers
     const handleAddFolder = (newFolder) => {
@@ -133,6 +153,11 @@ function MainApp() {
             folders={folders}
             courses={courses}
             assignments={assignments}
+            alerts={alerts}
+            onDismissAlert={(id) => setAlerts(prev =>
+            prev.map(a => a.id === id ? { ...a, isDismissed: true } : a)
+            )}
+
             onAddFolder={handleAddFolder}
             onUpdateFolder={handleUpdateFolder}
             onDeleteFolder={handleDeleteFolder}
@@ -142,6 +167,7 @@ function MainApp() {
             onAddAssignment={handleAddAssignment}
             onUpdateAssignment={handleUpdateAssignment}
             onDeleteAssignment={handleDeleteAssignment}
+            onImport={handleImport}
         />
     );
 }

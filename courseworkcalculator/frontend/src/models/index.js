@@ -4,18 +4,19 @@ CSCI 3300
 Dr. Porter 
 Spring 2026 
 
+Mackenzie 
+
 models/index.js 
 
 Core data modesl for the Coursework tracekr & GPA Calculator 
 
 Using Plain JS Objects 
-Mirroring the SQL Tables
-
-Mackenzie 
 
 */ 
 
 import { v4 as uuidv4 } from 'uuid';
+
+/* FOLDERS */
 
 export function createFolder(overrides = {}) {
   return {
@@ -26,6 +27,8 @@ export function createFolder(overrides = {}) {
     ...overrides,
   };
 }
+
+/* COURSES */
 
 export function createCourse(overrides = {}) {
   return {
@@ -40,6 +43,8 @@ export function createCourse(overrides = {}) {
   };
 }
 
+/* ASSIGNMENTS */
+
 export function createAssignment(overrides = {}) {
   return {
     id: uuidv4(),
@@ -52,6 +57,20 @@ export function createAssignment(overrides = {}) {
     notes: '',
     isDropped: false,
     createdAt: new Date().toISOString(),
+    ...overrides,
+  };
+  
+}
+
+/* ALERTS */ 
+export function createAlert(overrides = {}) {
+  return {
+    id:          uuidv4(),
+    type:        'warning',     // 'warning' | 'error' | 'info' | 'success'
+    message:     '',
+    courseID:    null,
+    isDismissed: false,
+    createdAt:   new Date().toISOString(),
     ...overrides,
   };
 }
