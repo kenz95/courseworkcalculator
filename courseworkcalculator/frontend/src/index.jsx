@@ -1,3 +1,14 @@
+/* 
+
+Group Two
+Dr. Porter
+CSCI 3300 
+
+Mason & 
+Edits by Mackenzie for imports & connecting all team member's code
+
+*/
+
 /* src/index.jsx - Entry point. Loads saved data from localStorage and sets up the app. */
 
 import React, { useState, useEffect } from 'react';

@@ -1,3 +1,14 @@
+/* 
+
+Group Two
+Dr. Porter
+CSCI 3300 
+
+Mason & 
+Edits by Mackenzie for imports & connecting all team member's code
+
+*/
+
 let inputModal = document.getElementById("inputModal");
 let resultsModal = document.getElementById("resultsModal");
 let simulateBtn = document.getElementById("simulateBtn");
