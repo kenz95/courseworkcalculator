@@ -6,10 +6,11 @@ Spring 2026
 
 src/components/importExport.js
 
-Data Access Layer
 Handles Import & Export for JSON, TXT, and PDF formats.
 Browser-only file uses:
 	- Blob, FileReader, and jsPDF (via CDN)
+
+Mackenzie 
 
 */
 
@@ -107,9 +108,6 @@ function exportTXT() {
             text += `\n  Current Course Grade: ${courseGrade}%\n\n`;
         });
 
-        text += '|| ------------------------------------ || \n';
-        text += '   CSCI 3300 | Group Two | UNG 2026\n';
-        text += '|| ------------------------------------ || \n';
 
         const blob    = new Blob([text], { type: 'text/plain' });
         const url     = URL.createObjectURL(blob);
@@ -216,7 +214,7 @@ function exportPDF() {
         // Footer
         doc.setFontSize(9);
         doc.setTextColor(150);
-        doc.text('CSCI 3300 | Group Two | UNG 2026', 14, 285);
+        
 
         doc.save(`coursework-export-${getDateStamp()}.pdf`);
         showStatus('PDF exported successfully!', 'success');

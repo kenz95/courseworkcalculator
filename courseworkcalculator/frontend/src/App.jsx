@@ -4,7 +4,8 @@ Group Two
 Dr. Porter
 CSCI 3300 
 
-Mason
+Mason & 
+Edits by Mackenzie for imports & connecting all team member's code
 
 */
 
@@ -18,6 +19,7 @@ import WeightModal from './components/assignments/WeightModal';
 import SimulationInterface from './components/simulation/gpaSimulationInterface';
 import AlertsList from './components/alerts/AlertsList';
 import GradeScalingModal from './components/folders/GradeScalingModal';
+import ImportExport from './components/settings/ImportExport';
 import { calculateSemesterGPA } from './logic/gpaCalculator';
 import { calculateCourseGrade } from './logic/gradeCalculator';
 import './App.css';
@@ -170,6 +172,14 @@ export default function App({
                     <AlertsList 
                          alerts={[]} 
                         onDismiss={() => {}} 
+                    />
+                    <ImportExport
+                         appState={{ courses, assignments, folders }}
+                        onImport={(data) => {
+                            if (data.folders)     setFolders(data.folders);
+                            if (data.courses)     setCourses(data.courses);
+                            if (data.assignments) setAssignments(data.assignments);
+                         }}
                     />
                 </div>
             </div>
