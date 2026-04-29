@@ -1,0 +1,9 @@
+/* src/App.css - Import all styles */
+
+/* Global styles */
+@import './styles/GradeManager.css';
+
+/* Component-specific styles - correct paths from src/ */
+@import './components/folders/GradeScalingModal.css';
+@import './components/assignments/WeightModal.css';
+@import './components/simulation/gpaSimulationInterface.css';
