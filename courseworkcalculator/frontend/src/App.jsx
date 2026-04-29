@@ -162,16 +162,24 @@ export default function App({
                     courses={courses}
                     assignments={assignments}
                     folders={folders}
+                    onBackToHome={handleBackToSemesters}
+                    onExportJSON={() => exportToJSON({ courses, assignments, folders })}
+                    onExportTXT={() => {/* handled inside ImportExport logic */}}
+                    onExportPDF={() => {/* handled inside ImportExport logic */}}
+                    onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={(result) => {
+                        
                         if (result.type === 'Semester') handleOpenSemester(result.id);
                         if (result.type === 'Course') {
+                            
                             const course = courses.find(c => c.id === result.id);
+                            
                             if (course) {
                                 handleOpenSemester(course.folderID);
                                 setTimeout(() => handleOpenCourse(result.id), 100);
                             }
                         }
-                    }}
+                    }}  
                 />
 
             <div className="container">
@@ -217,10 +225,25 @@ export default function App({
                     courses={courses}
                     assignments={assignments}
                     folders={folders}
+                    onBackToHome={handleBackToSemesters}
+                    onExportJSON={() => exportToJSON({ courses, assignments, folders })}
+                    onExportTXT={() => {/* handled inside ImportExport logic */}}
+                    onExportPDF={() => {/* handled inside ImportExport logic */}}
+                    onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={(result) => {
+                        
                         if (result.type === 'Semester') handleOpenSemester(result.id);
-                        if (result.type === 'Course') handleOpenCourse(result.id);
-                    }}
+                        if (result.type === 'Course') {
+                            
+                            const course = courses.find(c => c.id === result.id);
+                            
+                            if (course) {
+                                
+                                handleOpenSemester(course.folderID);
+                                setTimeout(() => handleOpenCourse(result.id), 100);
+                            }
+                        }
+                    }}  
                 />
 
             <div className="container">
@@ -314,10 +337,25 @@ export default function App({
                     courses={courses}
                     assignments={assignments}
                     folders={folders}
+                    onBackToHome={handleBackToSemesters}
+                    onExportJSON={() => exportToJSON({ courses, assignments, folders })}
+                    onExportTXT={() => {/* handled inside ImportExport logic */}}
+                    onExportPDF={() => {/* handled inside ImportExport logic */}}
+                    onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={(result) => {
+                        
                         if (result.type === 'Semester') handleOpenSemester(result.id);
-                        if (result.type === 'Course') handleOpenCourse(result.id);
-                    }}
+                       
+                        if (result.type === 'Course') {
+                            
+                            const course = courses.find(c => c.id === result.id);
+                            
+                            if (course) {
+                                handleOpenSemester(course.folderID);
+                                setTimeout(() => handleOpenCourse(result.id), 100);
+                            }
+                        }
+                    }}  
                 />
 
             <div className="container">
