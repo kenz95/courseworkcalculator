@@ -16,6 +16,7 @@ import CourseList from './components/courses/CourseList';
 import AssignmentList from './components/assignments/AssignmentList';
 import WeightModal from './components/assignments/WeightModal';
 import SimulationInterface from './components/simulation/gpaSimulationInterface';
+import AlertsList from './components/alerts/AlertsList';
 import GradeScalingModal from './components/folders/GradeScalingModal';
 import { calculateSemesterGPA } from './logic/gpaCalculator';
 import { calculateCourseGrade } from './logic/gradeCalculator';
@@ -165,6 +166,10 @@ export default function App({
                         onOpenSemester={handleOpenSemester}
                         onEditFolder={onUpdateFolder}
                         onDeleteFolder={onDeleteFolder}
+                    />
+                    <AlertsList 
+                         alerts={[]} 
+                        onDismiss={() => {}} 
                     />
                 </div>
             </div>
