@@ -9,7 +9,7 @@ models/index.js
 Core data modesl for the Coursework tracekr & GPA Calculator 
 
 Using Plain JS Objects 
-Mirroring the SQL Tables and be defined later when uisng Node or SQLite
+Mirroring the SQL Tables
 
 */ 
 
@@ -21,7 +21,7 @@ CREATE INSTITUITONS
 
 export function createInstitution(overrides = {}) {
     return {
-        id: crypto.randomUUID(), 
+        id: uuidv4(),
         name:   '',                                   // EX: University of North Georgia 
         gpa:    '4.0',                               // EX: 4.0 standard,  4.3 for A+, or custom
         gradeScale: {                               // Minimum percentage needed for each grade 
@@ -45,7 +45,7 @@ CREATE FOLDERS
 
 export function createFolder(overrides = {}){
     return {
-        id: crypto.randomUUID(),
+        id: uuidv4(),
         name:   '',                             // EX: Spring 2026 or Fall 2027 
         institutionID:  null,                   // OPTIONAL FK: for multi institution use cases
         createdAt: new Date().toISOString(),    // Add current date when created 
@@ -63,7 +63,7 @@ CREATE COURSE
 export function createCourse(overrides = {}){
     return {
 
-        id: crypto.randomUUID(), 
+        id: uuidv4(),
         folderID: null,                         // REQUIRED FK: which course belong to which folder
         institutionID:  null,                   // OPTIONAL FK: for multi institution use cases 
         name: '',                               // EX: CSCI 3330 or Numerical Analysis 
@@ -84,7 +84,7 @@ CREATE ASSIGNMENT
 
 export function createAssignment(overrides = {}) {
     return {
-        id: crypto.randomUUID(),
+        id: uuidv4(),
         courseID: null,                         // REQUIRED FK: Which course it belongs to 
         name: '',                               // EX: Discussion 10 or Lab Report 2
         category: '',                           // EX: Homework, Quiz, or Lab 
@@ -128,7 +128,7 @@ Shown in presentation layer & generated in logic
 
 export function createdAlert(overrides ={}) {
     return {
-        id: crypto.randomUUID(),
+        id: uuidv4(),
         type: 'warning',                    // Types are warning, error, info, or success 
         message: '',                        // EX: Warning! Grade is falling below goal! 
         courseID: null,                     // OPTIONAL FK: linking to specific course

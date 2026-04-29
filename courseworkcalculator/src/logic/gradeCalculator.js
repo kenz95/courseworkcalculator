@@ -1,3 +1,16 @@
+/* 
+
+Group Two
+Dr. Porter
+CSCI 3300 
+
+gradeCalculator.js
+
+Adam
+
+*/
+
+// Calculate weighted course grade from assignments
 export function calculateCourseAverage(coursework) {
   let total = 0;
 

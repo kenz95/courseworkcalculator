@@ -28,7 +28,7 @@ export default {
 
     if (url.pathname === '/' && method === 'GET') {
     
-    // Display simple HTML for Sprint Two! 
+    // Display HTML 
     const html = `
         <!DOCTYPE html> 
         <html lang="en">
@@ -116,6 +116,18 @@ export default {
             font-size: 1rem;
         }
         
+        .imEXBttn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.6rem 1.5rem;
+            background: #818cf8;
+            color: #66c2ff;
+            border: 2px solid #e6b800;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        
         .nxtSprint {
             margin-top: 2rem; 
             background: #003399;
@@ -135,6 +147,7 @@ export default {
           <p class="team"> Group Two: Adam || Mason || Angie || Mackenzie </p> 
           <p class="nxtSprint"> Next Sprint Three: Begin adding final UI/UX components, importing & exporting, multi-instiutional support, grade scaling, and search bar functionality.</p> 
           <p class="simBttn"> <a href="/simulationModel.html"> View GPA Simulation → </a>
+          <p class="imEXBtn"> <a href="/importExport.html"> Import & Export Files → </a>
           <footer>
              <div class="foot"> CSCI 3300 || Dr. Porter || UNG 2026 </div>
             <div class="foot"> <a href="mailto:mmjohn3601@ung.edu"> mmjohn3601@ung.edu </a> </div>

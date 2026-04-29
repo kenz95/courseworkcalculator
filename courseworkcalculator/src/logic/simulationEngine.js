@@ -1,3 +1,17 @@
+
+/* 
+
+Group Two
+Dr. Porter
+CSCI 3300 
+
+simulationEngine.js
+
+Adam
+
+*/
+
+
 export function requiredScoreForTarget(current, finalWeight, target) {
   return Number(((target - current) / (finalWeight / 100)).toFixed(2));
 }
