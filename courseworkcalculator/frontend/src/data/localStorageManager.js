@@ -6,10 +6,10 @@ Spring 2026
 
 data/localStorageManager.js 
 
-The local storage manager to create and load the save states from the User
-Also allowing for import & export of: 
-- JSON 
+Mackenzie 
 
+The local storage manager to create and load the save states from the User
+Also allowing for import & export JSON 
 
 */
 

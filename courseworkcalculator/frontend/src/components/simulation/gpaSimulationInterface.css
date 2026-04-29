@@ -1,0 +1,262 @@
+/* 
+
+Group Two
+Dr. Porter
+CSCI 3300 
+
+gpaSimulationInterface.css
+
+Mason
+
+*/
+
+/* src/components/simulation/SimulationInterface.css - GPA simulation specific styles */
+
+.sim-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.sim-modal-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.sim-modal-large {
+  max-width: 900px;
+}
+
+.sim-modal-header {
+  padding: 16px 20px;
+  background-color: #6366f1;
+  color: white;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sim-modal-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.sim-close-btn {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.sim-close-btn:hover {
+  color: #ddd;
+}
+
+.sim-modal-body {
+  padding: 20px;
+}
+
+.target-gpa-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.target-gpa-section label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.target-gpa-input {
+  width: 100px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.gpa-hint {
+  font-size: 12px;
+  color: #655;
+}
+
+.table-container {
+  overflow-x: auto;
+  margin: 20px 0;
+}
+
+.sim-course-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.sim-course-table th,
+.sim-course-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.sim-course-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.course-name {
+  font-weight: 500;
+}
+
+.credit-input {
+  width: 70px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.letter-grade {
+  font-weight: bold;
+  color: #6366f1;
+}
+
+.final-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.sim-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.results-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.results-card.success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.results-card.impossible {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.results-icon {
+  font-size: 48px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.results-card h3 {
+  margin: 0 0 16px 0;
+  font-size: 20px;
+  text-align: center;
+}
+
+.results-list {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-item.locked {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.result-item.distribution {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin: 8px 0;
+  justify-content: center;
+  text-align: center;
+}
+
+.result-item.distribution .result-grade {
+  text-align: center;
+  width: 100%;
+}
+
+.result-name {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.result-grade {
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.locked-badge {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-weight: normal;
+}
+
+.results-footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+}
+
+.final-gpa {
+  font-size: 18px;
+}
+
+.final-gpa strong {
+  font-size: 24px;
+}
+
+

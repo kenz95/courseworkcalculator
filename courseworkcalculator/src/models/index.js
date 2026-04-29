@@ -11,6 +11,8 @@ Core data modesl for the Coursework tracekr & GPA Calculator
 Using Plain JS Objects 
 Mirroring the SQL Tables
 
+Mackenzie 
+
 */ 
 
 /* 

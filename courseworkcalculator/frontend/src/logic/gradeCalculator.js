@@ -32,3 +32,21 @@ export function calculateCourseAverage(coursework) {
   }
   return Number(total.toFixed(2));
 }
+
+// Returns the default grade scale used across the app
+export function getDefaultGradeScale() {
+  return [
+    { min: 93, points: 4.0, letter: "A" },
+    { min: 90, points: 3.7, letter: "A-" },
+    { min: 87, points: 3.3, letter: "B+" },
+    { min: 83, points: 3.0, letter: "B" },
+    { min: 80, points: 2.7, letter: "B-" },
+    { min: 77, points: 2.3, letter: "C+" },
+    { min: 73, points: 2.0, letter: "C" },
+    { min: 70, points: 1.7, letter: "C-" },
+    { min: 67, points: 1.3, letter: "D+" },
+    { min: 63, points: 1.0, letter: "D" },
+    { min: 60, points: 0.7, letter: "D-" },
+    { min: 0,  points: 0.0, letter: "F"  },
+  ];
+}

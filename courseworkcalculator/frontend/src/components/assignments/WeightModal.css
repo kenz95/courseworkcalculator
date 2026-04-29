@@ -1,0 +1,82 @@
+/* 
+
+Group Two
+Dr. Porter
+CSCI 3300 
+
+WeightModal.css
+
+Mason
+
+*/
+
+/* src/components/assignments/WeightModal.css - Weight modal specific styles */
+
+/* Makes the modal a bit wider than default because we need room for the inputs */
+.modal {
+  max-width: 600px;
+}
+
+/* Scrollable list in case there's a ton of assignments */
+.modal-assignment-list {
+  margin-bottom: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Each row in the weight list */
+.modal-assignment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-assignment-name {
+  flex: 1;
+  font-size: 14px;
+}
+
+.weight-input {
+  width: 100px;
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: right;
+}
+
+.weight-unit {
+  width: 30px;
+  margin-left: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Bottom section showing the total percentage */
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 2px solid #e0e0e0;
+  margin-top: 12px;
+}
+
+.total-label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.total-value {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* When there's no assignments yet */
+.modal-assignment-list .empty-message {
+  text-align: center;
+  color: #999;
+  padding: 20px;
+}

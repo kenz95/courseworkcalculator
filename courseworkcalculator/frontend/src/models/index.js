@@ -4,12 +4,14 @@ CSCI 3300
 Dr. Porter 
 Spring 2026 
 
-src/models/index.js 
+models/index.js 
 
 Core data modesl for the Coursework tracekr & GPA Calculator 
 
 Using Plain JS Objects 
-Mirroring the SQL Tables and be defined later when uisng Node or SQLite
+Mirroring the SQL Tables
+
+Mackenzie 
 
 */ 
 
