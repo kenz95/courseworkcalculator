@@ -12,6 +12,7 @@ Edits by Mackenzie for imports & connecting all team member's code
 /* App.jsx - Main Dashboard component - controls which view (semesters/courses/assignments) is shown */
 
 import { useState } from 'react';
+import { fetchCourseAverage, checkAPIStatus } from './data/apiService';
 import FolderManager from './components/folders/FolderManager';
 import CourseList from './components/courses/CourseList';
 import AssignmentList from './components/assignments/AssignmentList';
@@ -22,6 +23,7 @@ import GradeScalingModal from './components/folders/GradeScalingModal';
 import ImportExport from './components/settings/ImportExport';
 import { calculateSemesterGPA } from './logic/gpaCalculator';
 import { calculateCourseGrade } from './logic/gradeCalculator';
+
 import './App.css';
 
 export default function App({ 

@@ -15,8 +15,9 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { v4 as uuidv4 } from 'uuid';
-import { createInitialState, serializeState, deserializeState } from './data/localStorageManager.js';
-import { createFolder, createCourse, createAssignment } from "./models/index.js";
+import { createInitialState, serializeState, deserializeState } from './data/localStorageManager';
+import { createFolder, createCourse, createAssignment } from './models/index.js';
+import { checkAPIStatus } from './data/apiService';
 import './App.css';
 
 const STORAGE_KEY = 'coursework_calculator_v1';
@@ -47,6 +48,13 @@ function MainApp() {
         };
         localStorage.setItem(STORAGE_KEY, serializeState(state));
     }, [folders, courses, assignments]);
+
+    // Check API Status 
+    useEffect(() => {
+        checkAPIStatus().then(online => {
+            console.log('API status:', online ? 'Connected ✅' : 'Offline ❌');
+        });
+    }, []);
 
     // Semester handlers
     const handleAddFolder = (newFolder) => {
