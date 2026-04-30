@@ -7,7 +7,7 @@ CSCI 3300
 FolderManager.jsx 
 
 Mason & 
-Edit by Mackenzie for updated UI/UX & any connections
+Edits by Mackenzie for updated UI/UX & any connections
 
 */
 
@@ -141,13 +141,13 @@ export default function FolderManager({
             {/* Edit Semester Modal */}
             {showEditModal && editingFolder && (
                 <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '400px' }}>
+                    <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h3>Edit Semester</h3>
                             <button onClick={() => setShowEditModal(false)} className="close-button">✕</button>
                         </div>
                         <div className="modal-body">
-                            <div style={{ marginBottom: '16px' }}>
+                            <div style={{ padding: '20px 24px' }}>
                                 <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Semester Name</label>
                                 <input
                                     type="text"
@@ -155,10 +155,13 @@ export default function FolderManager({
                                     onChange={(e) => setEditingFolder({ ...editingFolder, name: e.target.value })}
                                     style={{
                                         width: '100%',
-                                        padding: '8px 12px',
-                                        border: '1px solid #ddd',
-                                        borderRadius: '4px',
-                                        fontSize: '14px'
+                                        padding: '10px 14px',
+                                        border: '1px solid #e0e0e0',
+                                        borderRadius: '8px',
+                                        fontSize: '15px',
+                                        marginTop: '6px',
+                                        boxSizing: 'border-box',
+                                        outline: 'none',
                                     }}
                                 />
                             </div>
@@ -183,13 +186,11 @@ export default function FolderManager({
                                     </select>
                                 </div>
                             )}
-                        </div>
-                        <div className="modal-buttons" style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', marginTop: '20px' }}>
-                            <button onClick={handleDelete} className="delete-button">Delete Semester</button>
-                            <div style={{ display: 'flex', gap: '10px' }}>
-                                <button onClick={() => setShowEditModal(false)} className="btn-secondary">Cancel</button>
-                                <button onClick={handleSaveEdit} className="btn-primary">Save Changes</button>
-                            </div>
+                        </div>  
+                        <div className="modal-buttons" style={{ justifyContent: 'flex-start' }}>
+                             <button onClick={handleDelete} className="delete-button" style={{ marginRight: 'auto' }}>Delete Semester</button>
+                             <button onClick={() => setShowEditModal(false)} className="btn-secondary">Cancel</button>
+                            <button onClick={handleSaveEdit} className="btn-primary">Save Changes</button>
                         </div>
                     </div>
                 </div>

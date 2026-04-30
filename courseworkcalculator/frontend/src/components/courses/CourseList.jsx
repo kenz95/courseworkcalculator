@@ -6,7 +6,8 @@ CSCI 3300
 
 CouseList.jsx 
 
-Mason
+Mason 
+Edit by Mackenzie for updated UI/UX & any connections
 
 */
 
@@ -104,13 +105,13 @@ export default function CourseList({
             {/* Edit Course Modal */}
             {showEditModal && editingCourse && (
                 <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
-                    <div className="modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '400px' }}>
+                   <div className="modal" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-header">
                             <h3>Edit Course</h3>
                             <button onClick={() => setShowEditModal(false)} className="close-button">✕</button>
                         </div>
                         <div className="modal-body">
-                            <div style={{ marginBottom: '16px' }}>
+                            <div style={{ padding: '20px 24px' }}>
                                 <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Course Name</label>
                                 <input
                                     type="text"
@@ -118,38 +119,41 @@ export default function CourseList({
                                     onChange={(e) => setEditingCourse({ ...editingCourse, name: e.target.value })}
                                     style={{
                                         width: '100%',
-                                        padding: '8px 12px',
-                                        border: '1px solid #ddd',
-                                        borderRadius: '4px',
-                                        fontSize: '14px'
+                                        padding: '10px 14px',
+                                        border: '1.5px solid #e0e0e0',
+                                        borderRadius: '8px',
+                                        fontSize: '15px',
+                                        marginTop: '6px',
+                                        boxSizing: 'border-box',
+                                        outline: 'none',
                                     }}
                                 />
                             </div>
-                            <div style={{ marginBottom: '16px' }}>
-                                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Credit Hours</label>
-                                <input
-                                    type="number"
-                                    value={editingCourse.creditHours}
-                                    onChange={(e) => setEditingCourse({ ...editingCourse, creditHours: parseInt(e.target.value) || 0 })}
-                                    min="1"
-                                    max="6"
-                                    step="1"
-                                    style={{
-                                        width: '100%',
-                                        padding: '8px 12px',
-                                        border: '1px solid #ddd',
-                                        borderRadius: '4px',
-                                        fontSize: '14px'
-                                    }}
-                                />
+                          <div style={{ padding: '0 24px 20px 24px' }}>
+                             <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500' }}>Credit Hours</label>
+                             <input
+                                type="number"
+                                value={editingCourse.creditHours}
+                                onChange={(e) => setEditingCourse({ ...editingCourse, creditHours: parseInt(e.target.value) || 0 })}
+                                min="1"
+                                max="6"
+                                step="1"
+                                style={{
+                                     width: '100%',
+                                    padding: '10px 14px',
+                                    border: '1.5px solid #e0e0e0',
+                                    borderRadius: '8px',
+                                    fontSize: '15px',
+                                    boxSizing: 'border-box',
+                                    outline: 'none',
+                                }}
+                             />
                             </div>
                         </div>
-                        <div className="modal-buttons" style={{ display: 'flex', justifyContent: 'space-between', gap: '10px', marginTop: '20px' }}>
-                            <button onClick={handleDelete} className="delete-button">Delete Course</button>
-                            <div style={{ display: 'flex', gap: '10px' }}>
-                                <button onClick={() => setShowEditModal(false)} className="btn-secondary">Cancel</button>
-                                <button onClick={handleSaveEdit} className="btn-primary">Save Changes</button>
-                            </div>
+                        <div className="modal-buttons" style={{ justifyContent: 'flex-start' }}>
+                            <button onClick={handleDelete} className="delete-button" style={{ marginRight: 'auto' }}>Delete Course</button>
+                            <button onClick={() => setShowEditModal(false)} className="btn-secondary">Cancel</button>
+                            <button onClick={handleSaveEdit} className="btn-primary">Save Changes</button>
                         </div>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ CSCI 3300
 WeightModal.jsx 
 
 Mason
+& Edits by Mackenzie to fix formatting & certain styles 
 
 */
 
@@ -38,6 +39,7 @@ export default function WeightModal({
     if (!isOpen) return null;
 
     return (
+        <div className="modal modal-weight" onClick={(e) => e.stopPropagation()}>
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
                 <div className="modal-header">
@@ -72,8 +74,12 @@ export default function WeightModal({
                         <span>{total}%</span>
                     </div>
                 </div>
+                <div className="modal-buttons" style={{ justifyContent: 'flex-end' }}>
+                    <button onClick={onClose} className="btn-primary">Done</button>
+                </div>
             </div>
         </div>
+    </div>
     );
 }
 

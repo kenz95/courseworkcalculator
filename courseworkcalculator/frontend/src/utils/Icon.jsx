@@ -19,6 +19,10 @@ import backIcon     from '../assets/back.svg';
 import settingsIcon from '../assets/settings.svg';
 import githubIcon   from '../assets/github.svg';
 import searchIcon   from '../assets/search.svg';
+import warningIcon  from '../assets/warning.svg';
+import errorIcon    from '../assets/error.svg';
+import infoIcon     from '../assets/info.svg';
+
 
 const icons = {
   home:     homeIcon,
@@ -29,6 +33,10 @@ const icons = {
   settings: settingsIcon,
   github:   githubIcon,
   search:   searchIcon,
+  warning:  warningIcon,
+  error:    errorIcon,
+  info:     infoIcon,
+
 };
 
 const filters = {

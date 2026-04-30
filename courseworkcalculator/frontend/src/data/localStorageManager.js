@@ -117,3 +117,55 @@ export function importFromJSON(file) {
   });
 }
 
+/* MIGRATIONS */
+
+/*
+// Applies any pending schema migrations to the state and persists the result.
+// decoupled from presentation-layer concerns (color palettes, contrast rules).
+*/
+
+// Migrate State
+export function migrateState(state, migrationConfig = {}) {
+    let migrated = { ...state };
+    let didMigrate = false;
+    
+    if (!migrated.dataVersion || migrated.dataVersion < 2) {
+        const config = migrationConfig.courseColorMigration;
+        if (config) {
+            migrated.courses = (migrated.courses || []).map((course, i) => ({
+                ...course,
+                color: config.isValidColor(course.color) 
+                    ? course.color 
+                    : config.getReplacementColor(i)
+            }));
+        }
+        migrated.dataVersion = 2;
+        didMigrate = true;
+    }
+    
+    // If there are any future mitgrations
+    // ADD THEM HERE 
+
+    return { state: migrated, didMigrate };
+}
+
+// Load State 
+export function loadState(migrationConfig = {}) {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const initial = deserializeState(raw);
+    const { state, didMigrate } = migrateState(initial, migrationConfig);
+    
+    if (didMigrate) {
+        localStorage.setItem(STORAGE_KEY, serializeState(state));
+    }
+    
+    return state;
+}
+
+// Save State 
+export function saveState(state) {
+    localStorage.setItem(STORAGE_KEY, serializeState(state));
+}
+
+
+

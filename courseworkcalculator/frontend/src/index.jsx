@@ -19,6 +19,8 @@ import { createInitialState, serializeState, deserializeState } from './data/loc
 import { createFolder, createCourse, createAssignment } from './models/index.js';
 import { checkAPIStatus } from './data/apiService';
 import { runAllAlertChecks } from './logic/alertGenerator';
+import { loadState } from './data/localStorageManager';
+import { COURSE_COLORS, hasGoodContrast } from './utils/courseColors';
 import './App.css';
 
 const STORAGE_KEY = 'coursework_calculator_v1';
@@ -37,12 +39,16 @@ function MainApp() {
 
     // When the app first loads, grab whatever was saved in localStorage
     useEffect(() => {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        const state = deserializeState(raw);
-        setFolders(state.folders || []);
-        setCourses(state.courses || []);
-        setAssignments(state.assignments || []);
-    }, []);
+    const state = loadState({
+        courseColorMigration: {
+            isValidColor: hasGoodContrast,
+            getReplacementColor: (i) => COURSE_COLORS[i % COURSE_COLORS.length]
+        }
+    });
+    setFolders(state.folders || []);
+    setCourses(state.courses || []);
+    setAssignments(state.assignments || []);
+}, []);
 
     // Every time the data changes, save it back to localStorage
     useEffect(() => {

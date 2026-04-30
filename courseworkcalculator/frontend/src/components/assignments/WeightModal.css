@@ -7,6 +7,7 @@ CSCI 3300
 WeightModal.css
 
 Mason
+& Edits by Mackenzie to fix formatting & certain styles 
 
 */
 
@@ -14,7 +15,7 @@ Mason
 
 /* Makes the modal a bit wider than default because we need room for the inputs */
 .modal {
-  max-width: 600px;
+  max-width: 640px;
 }
 
 /* Scrollable list in case there's a ton of assignments */

@@ -62,19 +62,19 @@ export function generateGradeAlerts(courses, assignments, existingAlerts = []) {
     if (currentGrade < THRESHOLDS.failing) {
       newAlerts.push(createAlert({
         type:     'error',
-        message:  `⚠️ ${course.name}: Grade is ${currentGrade.toFixed(1)}% — you are currently failing.`,
+        message:  `${course.name}: Grade is ${currentGrade.toFixed(1)}% — you are currently failing.`,
         courseID: course.id,
       }));
     } else if (currentGrade < THRESHOLDS.atRisk) {
       newAlerts.push(createAlert({
         type:     'warning',
-        message:  `📉 ${course.name}: Grade is ${currentGrade.toFixed(1)}% — at risk of failing.`,
+        message:  `${course.name}: Grade is ${currentGrade.toFixed(1)}% — at risk of failing.`,
         courseID: course.id,
       }));
     } else if (currentGrade < THRESHOLDS.lowGrade) {
       newAlerts.push(createAlert({
         type:     'info',
-        message:  `📊 ${course.name}: Grade is ${currentGrade.toFixed(1)}% — consider reviewing your assignments.`,
+        message:  ` ${course.name}: Grade is ${currentGrade.toFixed(1)}% — consider reviewing your assignments.`,
         courseID: course.id,
       }));
     }
@@ -106,7 +106,7 @@ export function generateWeightAlerts(courses, assignments, existingAlerts = []) 
 
       newAlerts.push(createAlert({
         type:     'warning',
-        message:  `⚖️ ${course.name}: Assignment weights add up to ${totalWeight.toFixed(1)}% — should be 100%.`,
+        message:  `${course.name}: Assignment weights add up to ${totalWeight.toFixed(1)}% — should be 100%.`,
         courseID: course.id,
       }));
     }

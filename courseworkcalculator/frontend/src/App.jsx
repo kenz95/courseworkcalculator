@@ -5,7 +5,7 @@ Dr. Porter
 CSCI 3300 
 
 Mason & 
-Edits by Mackenzie for imports & connecting all team member's code
+Edits by Mackenzie for formatting, imports & connecting all team member's code
 
 */
 
@@ -24,8 +24,10 @@ import Icon from './utils/Icon';
 import { exportToJSON, importFromJSON } from './data/localStorageManager';
 import { calculateSemesterGPA } from './logic/gpaCalculator';
 import { calculateCourseGrade } from './logic/gradeCalculator';
+import { COURSE_COLORS } from './utils/courseColors';
 
 import './App.css';
+
 
 export default function App({ 
     folders = [],        
@@ -109,10 +111,10 @@ export default function App({
             name: `Course ${semesterCourses.length + 1}`,
             folderID: selectedFolderId,
             creditHours: 3,
-            color: '#' + Math.floor(Math.random() * 16777215).toString(16)
+            color: COURSE_COLORS[semesterCourses.length % COURSE_COLORS.length]
         };
         onAddCourse(newCourse);
-    };
+    };  
 
     const handleAddAssignmentWrapper = () => {
         const newAssignment = {
@@ -256,27 +258,54 @@ export default function App({
                     Back to Semesters
                 </button>
                 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', gap: '12px', flexWrap: 'wrap' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                        <h1 className="title" style={{ marginBottom: 0 }}>{currentFolder?.name}</h1>
+                <div className="title-row" style={{ 
+
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'center', 
+                        gap: '12px', 
+                        flexWrap: 'wrap' 
+                    }}>
+
+                    <div style={{ 
+
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            gap: '12px', 
+                            flexWrap: 'wrap' 
+                        }}>
+                        <h1 className="title" style={{ 
+                            marginBottom: 0,
+                            marginTop:    0, 
+                            paddingBottom: 0, 
+                            borderBottom: 'none',
+                            lineHeight: '1',
+                        }}>
+                            {currentFolder?.name}
+                        </h1>
                         {semesterGPA !== null && (
                             <div style={{ 
                                 backgroundColor: '#6366f1', 
                                 color: 'white', 
                                 padding: '8px 16px', 
                                 borderRadius: '8px',
-                                fontSize: '18px',
+                                fontSize: '16px',
                                 fontWeight: '600',
-                                display: 'inline-flex',
+                                display: 'flex',
                                 alignItems: 'center',
-                                gap: '8px'
-                            }}>
+                                gap: '8px',
+                                whiteSpace: 'nowrap',
+                        }}>
                                 <span><Icon name="chart" size={18} color="white" /></span>
                                 <span>GPA: {semesterGPA}</span>
                             </div>
                         )}
                     </div>
-                    <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ 
+                            display: 'flex', 
+                            gap: '10px', 
+                            alignItems: 'center'
+                        }}>
                         <button onClick={() => setShowScaleModal(true)}
                          className="settings-button"
                             style={{
@@ -389,8 +418,20 @@ export default function App({
                         Back to Courses
                 </button>
                 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px', flexWrap: 'wrap' }}>
-                    <h1 className="title" style={{ marginBottom: 0 }}>{currentCourse?.name}</h1>
+                <div className="title-row" style={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        gap: '16px', 
+                        flexWrap: 'wrap' 
+                    }}>
+                    <h1 className="title" style={{ 
+                            marginBottom: 0, 
+                            marginTop: 0,
+                            paddingBottom: 0,
+                            borderBottom: 'none',
+                            lineHeight: '1',
+                        }}>
+                            {currentCourse?.name}</h1>
                     {courseGrade && (
                         <div style={{ 
                             backgroundColor: currentCourse?.color || '#6366f1', 
