@@ -127,6 +127,40 @@ export default function App({
         onAddAssignment(newAssignment);
     };
 
+    // Handles clicks on search results — same logic regardless of which view we're on.
+    // Navigates by walking up the parent chain: assignment -> course -> semester.
+    const handleSelectSearchResult = (result) => {
+       
+        if (result.type === 'Semester') {
+            handleOpenSemester(result.id);
+            return;
+        }
+    
+        if (result.type === 'Course') {
+            const course = courses.find(c => c.id === result.id);
+            if (course) {
+                handleOpenSemester(course.folderID);
+                setTimeout(() => handleOpenCourse(result.id), 100);
+            }
+
+            return;
+        }
+    
+        if (result.type === 'Assignment') {
+            const assignment = assignments.find(a => a.id === result.id);
+                if (!assignment) return;
+        
+                const course = courses.find(c => c.id === assignment.courseID);
+                if (!course) return;
+        
+                handleOpenSemester(course.folderID);
+                setTimeout(() => handleOpenCourse(course.id), 100);
+
+                // The assignment lives on the course page, which is now open
+        }  
+    };  
+
+
     // Prepares course data for the GPA simulation modal
     const getCoursesForSimulation = () => {
         return semesterCourses.map(course => {
@@ -170,19 +204,7 @@ export default function App({
                     onExportTXT={() => {/* handled inside ImportExport logic */}}
                     onExportPDF={() => {/* handled inside ImportExport logic */}}
                     onImport={(file) => importFromJSON(file).then(onImport)}
-                    onSelectResult={(result) => {
-                        
-                        if (result.type === 'Semester') handleOpenSemester(result.id);
-                        if (result.type === 'Course') {
-                            
-                            const course = courses.find(c => c.id === result.id);
-                            
-                            if (course) {
-                                handleOpenSemester(course.folderID);
-                                setTimeout(() => handleOpenCourse(result.id), 100);
-                            }
-                        }
-                    }}  
+                    onSelectResult={handleSelectSearchResult} 
                 />
 
             <div className="container">
@@ -229,20 +251,7 @@ export default function App({
                     onExportTXT={() => {/* handled inside ImportExport logic */}}
                     onExportPDF={() => {/* handled inside ImportExport logic */}}
                     onImport={(file) => importFromJSON(file).then(onImport)}
-                    onSelectResult={(result) => {
-                        
-                        if (result.type === 'Semester') handleOpenSemester(result.id);
-                        if (result.type === 'Course') {
-                            
-                            const course = courses.find(c => c.id === result.id);
-                            
-                            if (course) {
-                                
-                                handleOpenSemester(course.folderID);
-                                setTimeout(() => handleOpenCourse(result.id), 100);
-                            }
-                        }
-                    }}  
+                    onSelectResult={handleSelectSearchResult}  
                 />
 
             <div className="container">
@@ -389,20 +398,7 @@ export default function App({
                     onExportTXT={() => {/* handled inside ImportExport logic */}}
                     onExportPDF={() => {/* handled inside ImportExport logic */}}
                     onImport={(file) => importFromJSON(file).then(onImport)}
-                    onSelectResult={(result) => {
-                        
-                        if (result.type === 'Semester') handleOpenSemester(result.id);
-                       
-                        if (result.type === 'Course') {
-                            
-                            const course = courses.find(c => c.id === result.id);
-                            
-                            if (course) {
-                                handleOpenSemester(course.folderID);
-                                setTimeout(() => handleOpenCourse(result.id), 100);
-                            }
-                        }
-                    }}  
+                    onSelectResult={handleSelectSearchResult}  
                 />
 
             <div className="container">
