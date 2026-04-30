@@ -154,6 +154,18 @@ function MainApp() {
         setAssignments(prev => prev.filter(a => a.id !== id));
     };
 
+    const handleResetAll = () => {
+
+        // Wipe localStorage entirely
+        localStorage.removeItem(STORAGE_KEY);
+    
+        // Reset all React state — the auto-save useEffect will write empty arrays back
+        setFolders([]);
+        setCourses([]);
+        setAssignments([]);
+        setAlerts([]);
+    };
+
     return (
         <App
             folders={folders}
@@ -174,6 +186,7 @@ function MainApp() {
             onUpdateAssignment={handleUpdateAssignment}
             onDeleteAssignment={handleDeleteAssignment}
             onImport={handleImport}
+            onResetAll={handleResetAll}  
         />
     );
 }

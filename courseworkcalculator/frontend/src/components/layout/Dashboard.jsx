@@ -28,6 +28,8 @@ export default function Dashboard({
   onExportPDF,
   onImport,
   onBackToHome,
+  onResetAll,
+
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef                 = useRef(null);
@@ -53,6 +55,27 @@ export default function Dashboard({
     input.click();
     setMenuOpen(false);
   };
+
+  const handleResetClick = () => {
+        setMenuOpen(false);
+    
+        // Two-step confirmation — destructive and irreversible
+        const confirmed = window.confirm(
+            'Are you sure you want to delete ALL application data?\n\n' +
+            'This will permanently remove every semester, course, and assignment. ' +
+            'This action CANNOT be undone.\n\n' +
+            'Tip: Export a backup first if you might want this data later.'
+        );
+        if (!confirmed) return;
+    
+        const reallyConfirmed = window.confirm(
+         'Last chance! Click OK to permanently delete all data.'
+        );
+            if (!reallyConfirmed) return;
+    
+            if (onResetAll) onResetAll();
+            alert('All data has been cleared.');
+        };
 
   const iconFilter = 'invert(1) sepia(1) saturate(2) hue-rotate(180deg)';
 
@@ -203,6 +226,18 @@ export default function Dashboard({
                 style={{ ...btnBase, background: '#1d4ed8', color: '#bfdbfe', border: '1px solid #3b82f6', width: '100%', padding: '6px 0' }}>
                 Import JSON Backup
               </button>
+            </div>
+
+          {/* Reset Data */}
+            <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #334155' }}>
+                <p style={{ color: '#fca5a5', fontSize: '0.72rem', margin: '0 0 0.5rem', letterSpacing: '0.05em' }}>
+                    RESET APPLICATION
+                </p>
+            <button onClick={handleResetClick}
+                style={{ ...btnBase, background: '#7f1d1d', color: '#fca5a5', border: '1px solid #dc2626', width: '100%', padding: '6px 0', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                <Icon name="trash" size={14} color="white" />
+                Delete ALL Data
+            </button>
             </div>
 
             {/* Footer */}

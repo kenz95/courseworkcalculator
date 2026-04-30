@@ -5,83 +5,93 @@ Dr. Porter
 Spring 2026
 
 components/settings/ImportExport.jsx
+
 Import & Export feature wired to real localStorage data
+
+The default export is the React component, kept here for any future settings 
+page that wants to render the same buttons.
 
 Mackenzie 
 
 */
 
+// Import all packages 
 import { exportToJSON, importFromJSON } from '../../data/localStorageManager';
 
-export default function ImportExport({ appState, onImport }) {
-  
-  const handleExportJSON = () => {
-    exportToJSON(appState);
-  };
-
-  const handleExportTXT = () => {
-        text += '|| ------------------------------------- || \n';
-        text += '   COURSEWORK TRACKER - GRADE EXPORT\n';
-        text += '|| ------------------------------------- || \n';
+export function exportToTXT(appState) {
+    let text = '';
+    text += '|| ------------------------------------- || \n';
+    text += '    COURSEWORK TRACKER - GRADE EXPORT       \n';
+    text += '|| ------------------------------------- || \n';
     text += `Exported: ${new Date().toLocaleString()}\n\n`;
 
     appState.courses.forEach(course => {
-      const courseAssignments = appState.assignments.filter(a => a.courseID === course.id);
-      text += `-------------------------------------------\n`;
-      text += `COURSE: ${course.name} (${course.creditHours} credit hours)\n`;
-      text += `-------------------------------------------\n`;
+        const courseAssignments = appState.assignments.filter(a => a.courseID === course.id);
+        text += `-------------------------------------------\n`;
+        text += `COURSE: ${course.name} (${course.creditHours} credit hours)\n`;
+        text += `-------------------------------------------\n`;
 
-      let totalWeight = 0;
-      let earnedPoints = 0;
+        let totalWeight = 0;
+        let earnedPoints = 0;
 
-      courseAssignments.forEach(a => {
-        const gradeDisplay = a.grade !== null ? `${a.grade}%` : 'Not graded';
-        text += `  ${a.name.padEnd(25)} Weight: ${String(a.weight + '%').padEnd(6)}  Grade: ${gradeDisplay}\n`;
-        if (a.grade !== null) {
-          totalWeight  += a.weight;
-          earnedPoints += a.grade * (a.weight / 100);
-        }
-      });
+        courseAssignments.forEach(a => {
+            const gradeDisplay = a.grade !== null ? `${a.grade}%` : 'Not graded';
+            text += `  ${a.name.padEnd(25)} Weight: ${String(a.weight + '%').padEnd(6)}  Grade: ${gradeDisplay}\n`;
+            if (a.grade !== null) {
+                totalWeight  += a.weight;
+                earnedPoints += a.grade * (a.weight / 100);
+            }
+        });
 
-      const courseGrade = totalWeight > 0
-        ? (earnedPoints / totalWeight * 100).toFixed(2)
-        : 'N/A';
-      text += `\n  Current Course Grade: ${courseGrade}%\n\n`;
+        const courseGrade = totalWeight > 0
+            ? (earnedPoints / totalWeight * 100).toFixed(2)
+            : 'N/A';
+        text += `\n  Current Course Grade: ${courseGrade}%\n\n`;
     });
 
-
-    const blob    = new Blob([text], { type: 'text/plain' });
-    const url     = URL.createObjectURL(blob);
-    const link    = document.createElement('a');
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url  = URL.createObjectURL(blob);
+    const link = document.createElement('a');
     link.href     = url;
     link.download = `coursework-export-${new Date().toISOString().slice(0, 10)}.txt`;
     link.click();
     URL.revokeObjectURL(url);
-  };
+}
 
-  const handleExportPDF = () => {
+export function exportToPDF(appState) {
+    if (window.jspdf) {
+        generatePDF(appState);
+        return;
+    }
+
     const script = document.createElement('script');
     script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-    script.onload = () => {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      let y = 20;
+    script.onload = () => generatePDF(appState);
+    script.onerror = () => alert('Could not load PDF library. Check your internet connection and try again.');
+    document.head.appendChild(script);
+}
 
-      doc.setFontSize(18);
-      doc.setTextColor(0, 0, 102);
-      doc.text('Coursework Tracker - Grade Export', 14, y);
-      y += 8;
+// Internal helper for the PDF generation, called from exportToPDF
+function generatePDF(appState) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y = 20;
 
-      doc.setFontSize(10);
-      doc.setTextColor(100);
-      doc.text(`Exported: ${new Date().toLocaleString()}`, 14, y);
-      y += 10;
+    doc.setFontSize(18);
+    doc.setTextColor(0, 0, 102);
+    doc.text('Coursework Tracker - Grade Export', 14, y);
+    y += 8;
 
-      doc.setDrawColor(0, 51, 153);
-      doc.line(14, y, 196, y);
-      y += 8;
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text(`Exported: ${new Date().toLocaleString()}`, 14, y);
+    y += 10;
 
-      appState.courses.forEach(course => {
+    doc.setDrawColor(0, 51, 153);
+    doc.line(14, y, 196, y);
+    y += 8;
+
+    appState.courses.forEach(course => {
         if (y > 260) { doc.addPage(); y = 20; }
 
         const courseAssignments = appState.assignments.filter(a => a.courseID === course.id);
@@ -106,38 +116,42 @@ export default function ImportExport({ appState, onImport }) {
         let earnedPoints = 0;
 
         courseAssignments.forEach(a => {
-          if (y > 270) { doc.addPage(); y = 20; }
-          doc.setFontSize(10);
-          doc.setTextColor(40);
-          doc.text(a.name,                                   14,  y);
-          doc.text(`${a.weight}%`,                           110, y);
-          doc.text(a.grade !== null ? `${a.grade}%` : '—',  155, y);
-          y += 6;
+            if (y > 270) { doc.addPage(); y = 20; }
+            doc.setFontSize(10);
+            doc.setTextColor(40);
+            doc.text(a.name,                                   14,  y);
+            doc.text(`${a.weight}%`,                           110, y);
+            doc.text(a.grade !== null ? `${a.grade}%` : '—',  155, y);
+            y += 6;
 
-          if (a.grade !== null) {
-            totalWeight  += a.weight;
-            earnedPoints += a.grade * (a.weight / 100);
-          }
+            if (a.grade !== null) {
+                totalWeight  += a.weight;
+                earnedPoints += a.grade * (a.weight / 100);
+            }
         });
 
         const avg = totalWeight > 0
-          ? (earnedPoints / totalWeight * 100).toFixed(2)
-          : 'N/A';
+            ? (earnedPoints / totalWeight * 100).toFixed(2)
+            : 'N/A';
 
         y += 2;
         doc.setFontSize(10);
         doc.setTextColor(0, 100, 0);
         doc.text(`Current Grade: ${avg}%`, 14, y);
         y += 12;
-      });
+    });
 
-      doc.setFontSize(9);
-      doc.setTextColor(150);
-      doc.save(`coursework-export-${new Date().toISOString().slice(0, 10)}.pdf`);
-    };
-    document.head.appendChild(script);
-  };
+    doc.setFontSize(9);
+    doc.setTextColor(150);
+    doc.save(`coursework-export-${new Date().toISOString().slice(0, 10)}.pdf`);
+}
 
+/* REACT COMPONENT  */
+// For any future settings page that wants &
+// to render these buttons in a UI
+
+export default function ImportExport({ appState, onImport }) {
+  
   const handleImport = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -163,14 +177,14 @@ export default function ImportExport({ appState, onImport }) {
       </h3>
 
       <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
-        <button onClick={handleExportJSON} style={btnStyle('#312e81', '#a5b4fc', '#4338ca')}>
-          📄 Export JSON
+        <button onClick={() => exportToJSON(appState)} style={btnStyle('#312e81', '#a5b4fc', '#4338ca')}>
+          Export JSON
         </button>
-        <button onClick={handleExportTXT} style={btnStyle('#064e3b', '#6ee7b7', '#059669')}>
-          📝 Export TXT
+        <button onClick={() => exportToTXT(appState)} style={btnStyle('#064e3b', '#6ee7b7', '#059669')}>
+          Export TXT
         </button>
-        <button onClick={handleExportPDF} style={btnStyle('#7f1d1d', '#fca5a5', '#dc2626')}>
-          📑 Export PDF
+        <button onClick={() => exportToPDF(appState)} style={btnStyle('#7f1d1d', '#fca5a5', '#dc2626')}>
+          Export PDF
         </button>
       </div>
 

@@ -22,6 +22,7 @@ import AlertsList from './components/alerts/AlertsList';
 import GradeScalingModal from './components/folders/GradeScalingModal';
 import Icon from './utils/Icon';
 import { exportToJSON, importFromJSON } from './data/localStorageManager';
+import { exportToTXT, exportToPDF } from './components/settings/ImportExport';
 import { calculateSemesterGPA } from './logic/gpaCalculator';
 import { calculateCourseGrade } from './logic/gradeCalculator';
 import { COURSE_COLORS } from './utils/courseColors';
@@ -44,7 +45,9 @@ export default function App({
     onDeleteCourse,
     onAddAssignment,
     onUpdateAssignment,
-    onDeleteAssignment
+    onDeleteAssignment,
+    onResetAll,
+
 }) {
     // Navigation state - tracks which screen we're on and what's selected
     const [selectedFolderId, setSelectedFolderId] = useState(null);
@@ -160,6 +163,12 @@ export default function App({
         }  
     };  
 
+    // Resets all data and navigates back to the semesters view so the user doesn't end up looking at a deleted course
+    const handleResetAndNavigate = () => {
+
+         handleBackToSemesters();
+        if (onResetAll) onResetAll();
+    };
 
     // Prepares course data for the GPA simulation modal
     const getCoursesForSimulation = () => {
@@ -201,10 +210,11 @@ export default function App({
                     folders={folders}
                     onBackToHome={handleBackToSemesters}
                     onExportJSON={() => exportToJSON({ courses, assignments, folders })}
-                    onExportTXT={() => {/* handled inside ImportExport logic */}}
-                    onExportPDF={() => {/* handled inside ImportExport logic */}}
+                    onExportTXT={() => exportToTXT({ courses, assignments, folders })}
+                    onExportPDF={() => exportToPDF({ courses, assignments, folders })}
                     onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={handleSelectSearchResult} 
+                    onResetAll={handleResetAndNavigate}
                 />
 
             <div className="container">
@@ -248,10 +258,11 @@ export default function App({
                     folders={folders}
                     onBackToHome={handleBackToSemesters}
                     onExportJSON={() => exportToJSON({ courses, assignments, folders })}
-                    onExportTXT={() => {/* handled inside ImportExport logic */}}
-                    onExportPDF={() => {/* handled inside ImportExport logic */}}
+                    onExportTXT={() => exportToTXT({ courses, assignments, folders })}
+                    onExportPDF={() => exportToPDF({ courses, assignments, folders })}
                     onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={handleSelectSearchResult}  
+                    onResetAll={handleResetAndNavigate}
                 />
 
             <div className="container">
@@ -395,10 +406,11 @@ export default function App({
                     folders={folders}
                     onBackToHome={handleBackToSemesters}
                     onExportJSON={() => exportToJSON({ courses, assignments, folders })}
-                    onExportTXT={() => {/* handled inside ImportExport logic */}}
-                    onExportPDF={() => {/* handled inside ImportExport logic */}}
+                    onExportTXT={() => exportToTXT({ courses, assignments, folders })}
+                    onExportPDF={() => exportToPDF({ courses, assignments, folders })}
                     onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={handleSelectSearchResult}  
+                    onResetAll={handleResetAndNavigate}
                 />
 
             <div className="container">
