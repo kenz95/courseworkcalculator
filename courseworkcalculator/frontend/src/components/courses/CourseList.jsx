@@ -16,14 +16,18 @@ Edit by Mackenzie for updated UI/UX & any connections
 
 import { useState } from 'react';
 import { calculateCourseGrade } from '../../logic/gradeCalculator';
+import { GradeConverter } from '../../logic/gradeConverter';
 
 export default function CourseList({ 
     courses = [],
     assignments = [],
+    gradeScale,
     onOpenCourse,
     onEditCourse,
     onDeleteCourse
 }) {
+
+    const converter = new GradeConverter(gradeScale);
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingCourse, setEditingCourse] = useState(null);
 
@@ -82,9 +86,10 @@ export default function CourseList({
                                             padding: '2px 8px', 
                                             borderRadius: '12px',
                                             fontSize: '12px',
-                                            fontWeight: '600'
+                                            fontWeight: '600',
+                                             whiteSpace: 'nowrap',
                                         }}>
-                                            {courseGrade}%
+                                            {courseGrade}% {converter.percentageToLetter(courseGrade)}
                                         </div>
                                     )}
                                 </div>

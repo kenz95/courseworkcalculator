@@ -12,14 +12,19 @@ Mason
 
 /* components/assignments/AssignmentList.jsx - Assignment items with grade editing */
 import Icon from '../../utils/Icon';
+import { GradeConverter } from '../../logic/gradeConverter';
 
 export default function AssignmentList({ 
     assignments = [],
+    gradeScale,
     onUpdateAssignment,
     onDeleteAssignment,
     onAddAssignment,
     onOpenWeightModal
 }) {
+
+    const converter = new GradeConverter(gradeScale);
+    
     // Updates the grade for a single assignment. Uses parseFloat so decimals work (like 89.5)
     const handleUpdateGrade = (assignmentId, grade) => {
         const assignment = assignments.find(a => a.id === assignmentId);
@@ -76,6 +81,16 @@ export default function AssignmentList({
                                         style={{ width: '80px' }}
                                     />
                                     <span style={{ fontSize: '14px' }}>%</span>
+                                        {assignment.grade !== null && assignment.grade !== '' && (
+                                            <span style={{ 
+                                                fontSize: '14px', 
+                                                fontWeight: '600', 
+                                                color: '#6366f1', 
+                                                marginLeft: '4px' 
+                                            }}>
+                                                ({converter.percentageToLetter(assignment.grade)})
+                                            </span>
+                                        )}
                                 </div>
                                 <button
                                     onClick={() => handleDelete(assignment)}

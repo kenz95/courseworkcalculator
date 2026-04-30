@@ -6,59 +6,50 @@ CSCI 3300
 
 gradeConverter.js
 
-Adam
+Adam & Mason's adpated per-semester gradeScale.
 
 */
 
+import { getDefaultGradeScale } from './gradeCalculator';
 
 export class GradeConverter {
-  constructor(config = {}) {
-    this.letterScale = [
-    { min: 93, grade: "A" },
-    { min: 90, grade: "A-" },
-    { min: 87, grade: "B+" },
-    { min: 83, grade: "B" },
-    { min: 80, grade: "B-" },
-    { min: 77, grade: "C+" },
-    { min: 73, grade: "C" },
-    { min: 70, grade: "C-" },
-    { min: 60, grade: "D" },
-    { min: 0, grade: "F" },
-    ];
+    constructor(gradeScale = null) {
+        // Mason's scale shape: [{ min, points, letter }, ...]
+        // Default to Mason's +/- scale if nothing is passed in
+        const scale = gradeScale || getDefaultGradeScale();
+        
+        // Build Adam's internal lookup tables from Mason's scale
+        this.letterScale = scale.map(s => ({ min: s.min, grade: s.letter }));
+        
+        this.gpaScale = {};
+        for (const s of scale) {
+            this.gpaScale[s.letter] = s.points;
+        }
+    }
 
-    this.gpaScale = {
-    "A": 4.0,
-    "A-": 3.7,
-    "B+": 3.3,
-    "B": 3.0,
-    "B-": 2.7,
-    "C+": 2.3,
-    "C": 2.0,
-    "C-": 1.7,
-    "D": 1.0,
-    "F": 0.0
-    };
-}
+    percentageToLetter(percent) {
+        if (percent === null || percent === undefined || isNaN(percent)) return null;
+        return this.letterScale.find(g => percent >= g.min)?.grade || "F";
+    }
 
-  percentageToLetter(percent) {
-    return this.letterScale.find(g => percent >= g.min)?.grade || "F";
-  }
+    letterToGPA(letter) {
+        return this.gpaScale[letter] ?? null;
+    }
 
-  letterToGPA(letter) {
-    return this.gpaScale[letter] ?? null;
-  }
+    percentageToGPA(percent) {
+        const letter = this.percentageToLetter(percent);
+        return letter ? this.letterToGPA(letter) : null;
+    }
 
-  percentageToGPA(percent) {
-    const letter = this.percentageToLetter(percent);
-    return this.letterToGPA(letter);
-  }
-
-  convert(percent) {
-    const letter = this.percentageToLetter(percent);
-    return {
-      percentage: percent,
-      letter,
-      gpa: this.letterToGPA(letter),
-    };
-  }
+    convert(percent) {
+        if (percent === null || percent === undefined || isNaN(percent)) {
+            return { percentage: percent, letter: null, gpa: null };
+        }
+        const letter = this.percentageToLetter(percent);
+        return {
+            percentage: percent,
+            letter,
+            gpa: this.letterToGPA(letter),
+        };
+    }
 }

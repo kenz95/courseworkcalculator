@@ -20,6 +20,7 @@ import WeightModal from './components/assignments/WeightModal';
 import SimulationInterface from './components/simulation/gpaSimulationInterface';
 import AlertsList from './components/alerts/AlertsList';
 import GradeScalingModal from './components/folders/GradeScalingModal';
+import GradeOutcomeModal from './components/simulation/GradeOutcomeModal';
 import Icon from './utils/Icon';
 import InstitutionDashboard from './components/institutions/InstitutionDashboard';
 import { exportToJSON, importFromJSON } from './data/localStorageManager';
@@ -62,6 +63,7 @@ export default function App({
     const [showWeightModal, setShowWeightModal] = useState(false);
     const [showGpaSim, setShowGpaSim] = useState(false);
     const [showScaleModal, setShowScaleModal] = useState(false);
+    const [showOutcomeModal, setShowOutcomeModal] = useState(false);
     
     // Helper variables to make the render logic cleaner
     const semesterCourses = courses.filter(c => c.folderID === selectedFolderId);
@@ -371,7 +373,17 @@ export default function App({
                             <Icon name="settings" size={14} color="white" />
                                 Scaling
                         </button>
-
+                        <button onClick={() => setShowOutcomeModal(true)} 
+                            className="add-button"
+                                style={{
+                                    display:    'flex',
+                                    alignItems: 'center',
+                                    gap:        '6px',
+                            }}
+                        >
+                            <Icon name="target" size={14} color="white" /> 
+                                Grade Outcome Simulation
+                        </button>
                         <button onClick={() => setShowGpaSim(true)}
                             className="add-button"
                             style={{
@@ -394,6 +406,7 @@ export default function App({
                     <CourseList
                         courses={semesterCourses}
                         assignments={assignments}
+                        gradeScale={semesterGradeScale}
                         onOpenCourse={handleOpenCourse}
                         onEditCourse={onUpdateCourse}
                         onDeleteCourse={onDeleteCourse}
@@ -415,6 +428,14 @@ export default function App({
                             onUpdateFolder(selectedFolderId, { gradeScale: newScale });
                         }
                     }}
+                />
+
+                <GradeOutcomeModal
+                    isOpen={showOutcomeModal}
+                    onClose={() => setShowOutcomeModal(false)}
+                    courses={semesterCourses}
+                    assignments={assignments}
+                    gradeScale={semesterGradeScale}
                 />
 
                 <GradeScalingModal
@@ -501,6 +522,7 @@ export default function App({
                 <div className="section">
                     <AssignmentList
                         assignments={courseAssignments}
+                        gradeScale={semesterGradeScale}
                         onUpdateAssignment={onUpdateAssignment}
                         onDeleteAssignment={onDeleteAssignment}
                         onAddAssignment={handleAddAssignmentWrapper}
