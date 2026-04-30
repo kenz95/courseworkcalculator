@@ -129,6 +129,7 @@ export function migrateState(state, migrationConfig = {}) {
     let migrated = { ...state };
     let didMigrate = false;
     
+    // v2: Color pallete course 
     if (!migrated.dataVersion || migrated.dataVersion < 2) {
         const config = migrationConfig.courseColorMigration;
         if (config) {
@@ -143,8 +144,43 @@ export function migrateState(state, migrationConfig = {}) {
         didMigrate = true;
     }
     
-    // If there are any future mitgrations
-    // ADD THEM HERE 
+    // v3: Institutions 
+    if (migrated.dataVersion < 3) {
+        if (!Array.isArray(migrated.institutions)) {
+            migrated.institutions = [];
+        }
+        migrated.dataVersion = 3;
+        didMigrate = true;
+    }
+
+    // v4: Every folder needs a gradeScale field
+    if (migrated.dataVersion < 4) {
+        const defaultScale = [
+            { min: 93, points: 4.0, letter: "A"  },
+            { min: 90, points: 3.7, letter: "A-" },
+            { min: 87, points: 3.3, letter: "B+" },
+            { min: 83, points: 3.0, letter: "B"  },
+            { min: 80, points: 2.7, letter: "B-" },
+            { min: 77, points: 2.3, letter: "C+" },
+            { min: 73, points: 2.0, letter: "C"  },
+            { min: 70, points: 1.7, letter: "C-" },
+            { min: 67, points: 1.3, letter: "D+" },
+            { min: 63, points: 1.0, letter: "D"  },
+            { min: 60, points: 0.7, letter: "D-" },
+            { min: 0,  points: 0.0, letter: "F"  },
+        ];
+        
+        migrated.folders = (migrated.folders || []).map(folder => ({
+            ...folder,
+            gradeScale: folder.gradeScale || defaultScale
+        }));
+        migrated.dataVersion = 4;
+        didMigrate = true;
+    }
+
+    // If there are any future mitgrations 
+    // ADD THEM HERE - N being the next/current version number
+    // EX: vN: DESCRIPTION 
 
     return { state: migrated, didMigrate };
 }

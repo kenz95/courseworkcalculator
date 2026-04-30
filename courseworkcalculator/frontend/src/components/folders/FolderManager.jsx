@@ -64,6 +64,7 @@ export default function FolderManager({
         <>
             <div className="grid">
                 {folders.map(folder => {
+
                     // Filters courses to just the ones in this semester
                     const semesterCourses = courses.filter(c => c.folderID === folder.id);
                     const semesterGPA = calculateSemesterGPA(semesterCourses, assignments, gradeScale);
@@ -122,6 +123,17 @@ export default function FolderManager({
                                         </div>
                                     )}
                                 </div>
+                                
+                                {/* Institution name (only shows if semester is assigned to one) */}
+                                {folder.institutionID && (() => {
+                                const inst = institutions.find(i => i.id === folder.institutionID);
+                                return inst ? (
+                                    <div className="card-subtitle" style={{ fontSize: '11px', color: '#666', fontStyle: 'italic', marginBottom: '4px' }}>
+                                        {inst.name}
+                                    </div>
+                                 ) : null;
+                                })()}
+                                
                                 <span className="card-subtitle" style={{ fontSize: '11px', color: '#999' }}>
                                     Click to open →
                                 </span>

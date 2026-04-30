@@ -36,6 +36,10 @@ export default {
       return new Response(null, { headers });
     }
 
+    // HEALTH CHECK
+    if (url.pathname === '/api/status' && method === 'GET') {
+      return new Response(JSON.stringify({ status: 'ok' }), { headers }); 
+    } 
 
     // COURSES
     if (url.pathname === '/courses' && method === 'GET') {

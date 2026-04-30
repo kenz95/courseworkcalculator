@@ -16,11 +16,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { v4 as uuidv4 } from 'uuid';
 import { createInitialState, serializeState, deserializeState } from './data/localStorageManager';
-import { createFolder, createCourse, createAssignment } from './models/index.js';
+import { createFolder, createCourse, createAssignment, createInstitution } from './models/index.js';
 import { checkAPIStatus } from './data/apiService';
 import { runAllAlertChecks } from './logic/alertGenerator';
 import { loadState } from './data/localStorageManager';
 import { COURSE_COLORS, hasGoodContrast } from './utils/courseColors';
+
 import './App.css';
 
 const STORAGE_KEY = 'coursework_calculator_v1';
@@ -30,11 +31,13 @@ function MainApp() {
     const [courses, setCourses] = useState([]);
     const [assignments, setAssignments] = useState([]);
     const [alerts, setAlerts] = useState([]);
+    const [institutions, setInstitutions] = useState([]);
 
     const handleImport = (data) => {
         if (data.folders)     setFolders(data.folders);
         if (data.courses)     setCourses(data.courses);
         if (data.assignments) setAssignments(data.assignments);
+        if (data.institutions) setInstitutions(data.institutions);
     };
 
     // When the app first loads, grab whatever was saved in localStorage
@@ -48,6 +51,7 @@ function MainApp() {
     setFolders(state.folders || []);
     setCourses(state.courses || []);
     setAssignments(state.assignments || []);
+    setInstitutions(state.institutions || []);
 }, []);
 
     // Every time the data changes, save it back to localStorage
@@ -56,9 +60,10 @@ function MainApp() {
             folders, 
             courses, 
             assignments, 
-            institutions: [], 
+            institutions, 
             alerts: [], 
-            settings: {} 
+            settings: {}, 
+            dataVersion: 4,
         };
         localStorage.setItem(STORAGE_KEY, serializeState(state));
     }, [folders, courses, assignments]);
@@ -84,9 +89,21 @@ function MainApp() {
 
     // Semester handlers
     const handleAddFolder = (newFolder) => {
+        let inheritedScale = undefined;
+
+        // If this semester is being assigned to an institution, inherit its grade scale
+        if (newFolder.institutionID) {
+            const institution = institutions.find(i => i.id === newFolder.institutionID);
+            if (institution && institution.gradeScale) {
+                inheritedScale = institution.gradeScale;
+            }
+        }
+
         const folderWithId = createFolder({
-            name: newFolder.name,
-            institutionID: newFolder.institutionID || null
+        name: newFolder.name,
+        institutionID: newFolder.institutionID || null,
+        // Only override the default if we have an institution scale to inherit
+            ...(inheritedScale && { gradeScale: inheritedScale })
         });
         setFolders([...folders, folderWithId]);
     };
@@ -154,6 +171,36 @@ function MainApp() {
         setAssignments(prev => prev.filter(a => a.id !== id));
     };
 
+    // Institution handlers
+    const handleAddInstitution = (newInstitution) => {
+        const institutionWithId = createInstitution({
+            name: typeof newInstitution === 'string' 
+                ? newInstitution 
+                : newInstitution.name
+        });
+        setInstitutions([...institutions, institutionWithId]);
+    };
+
+    const handleUpdateInstitution = (id, updates) => {
+        setInstitutions(institutions.map(inst => 
+            inst.id === id ? { ...inst, ...updates } : inst
+        ));
+    };
+
+    // Removes an institution. Currently the UI only triggers an unassign-style
+    // removal, so the cascade arrays below are defensive &
+    // they only kick in if a future UI explicitly asks for a "delete everything underneath" flow.    
+    const handleDeleteInstitution = (id) => {
+        // Unassign all folders that belonged to this institution
+        setFolders(prev => prev.map(f => 
+            f.institutionID === id ? { ...f, institutionID: null } : f
+        ));
+    
+        // Remove the institution itself
+        setInstitutions(prev => prev.filter(inst => inst.id !== id));
+    };
+
+
     const handleResetAll = () => {
 
         // Wipe localStorage entirely
@@ -172,6 +219,7 @@ function MainApp() {
             courses={courses}
             assignments={assignments}
             alerts={alerts}
+            institutions={institutions}
             onDismissAlert={(id) => setAlerts(prev =>
             prev.map(a => a.id === id ? { ...a, isDismissed: true } : a)
             )}
@@ -185,6 +233,9 @@ function MainApp() {
             onAddAssignment={handleAddAssignment}
             onUpdateAssignment={handleUpdateAssignment}
             onDeleteAssignment={handleDeleteAssignment}
+            onAddInstitution={handleAddInstitution}
+            onUpdateInstitution={handleUpdateInstitution}
+            onDeleteInstitution={handleDeleteInstitution}
             onImport={handleImport}
             onResetAll={handleResetAll}  
         />

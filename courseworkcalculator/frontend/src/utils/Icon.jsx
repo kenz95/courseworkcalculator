@@ -24,6 +24,7 @@ import warningIcon  from '../assets/warning.svg';
 import errorIcon    from '../assets/error.svg';
 import infoIcon     from '../assets/info.svg';
 import trashIcon    from '../assets/trash.svg';
+import buildingIcon from '../assets/building.svg';
 
 // Declare the Icons
 const icons = {
@@ -39,6 +40,7 @@ const icons = {
   error:    errorIcon,
   info:     infoIcon,
   trash:    trashIcon,
+  building: buildingIcon
 
 };
 

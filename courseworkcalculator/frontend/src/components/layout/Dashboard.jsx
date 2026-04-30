@@ -28,12 +28,14 @@ export default function Dashboard({
   onExportPDF,
   onImport,
   onBackToHome,
+  onOpenInstitutions,
   onResetAll,
 
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef                 = useRef(null);
 
+  // CLICK OPEN SETTINGS 
   useEffect(() => {
     function handleClick(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -44,6 +46,7 @@ export default function Dashboard({
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
+  // IMPORT 
   const handleImportClick = () => {
     const input    = document.createElement('input');
     input.type     = 'file';
@@ -56,10 +59,17 @@ export default function Dashboard({
     setMenuOpen(false);
   };
 
+  // INSTITUTIONS 
+  const handleInstitutionsClick = () => {
+        setMenuOpen(false);
+        if (onOpenInstitutions) onOpenInstitutions();
+   };
+
+  // RESET BUTTON 
   const handleResetClick = () => {
         setMenuOpen(false);
     
-        // Two-step confirmation — destructive and irreversible
+        // Two-step confirmation -- destructive and irreversible
         const confirmed = window.confirm(
             'Are you sure you want to delete ALL application data?\n\n' +
             'This will permanently remove every semester, course, and assignment. ' +
@@ -136,7 +146,7 @@ export default function Dashboard({
         />
       </div>
 
-      {/* GitHub  */}
+      {/* GitHub */}
       
         <a href="https://github.com/kenz95/courseworkcalculator"
         target="_blank"
@@ -160,7 +170,7 @@ export default function Dashboard({
         GitHub
       </a>
 
-      {/*  Settings dropdown  */}
+      {/*  Settings Dropdown  */}
       <div ref={menuRef} style={{ position: 'relative' }}>
         <button
           onClick={() => setMenuOpen(prev => !prev)}
@@ -228,6 +238,18 @@ export default function Dashboard({
               </button>
             </div>
 
+          {/* Institutions */}
+            <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #334155' }}>
+                <p style={{ color: '#64748b', fontSize: '0.72rem', margin: '0 0 0.5rem', letterSpacing: '0.05em' }}>
+                    ORGANIZATION
+                </p>
+                <button onClick={handleInstitutionsClick}
+                    style={{ ...btnBase, background: '#312e81', color: '#a5b4fc', border: '1px solid #4338ca', width: '100%', padding: '6px 0', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                     <Icon name="building" size={14} color="white" />
+                        Institutions
+                </button>
+            </div>
+
           {/* Reset Data */}
             <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #334155' }}>
                 <p style={{ color: '#fca5a5', fontSize: '0.72rem', margin: '0 0 0.5rem', letterSpacing: '0.05em' }}>
@@ -236,14 +258,14 @@ export default function Dashboard({
             <button onClick={handleResetClick}
                 style={{ ...btnBase, background: '#7f1d1d', color: '#fca5a5', border: '1px solid #dc2626', width: '100%', padding: '6px 0', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                 <Icon name="trash" size={14} color="white" />
-                Delete ALL Data
+                    Delete ALL Data
             </button>
             </div>
 
             {/* Footer */}
             <div style={{ padding: '0.6rem 1rem' }}>
               <p style={{ color: '#475569', fontSize: '0.72rem', margin: 0, textAlign: 'center' }}>
-                CSCI 3300 | Group Two | UNG 2026
+                | 2026 | Version 1.0.4 |
               </p>
             </div>
 

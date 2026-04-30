@@ -9,18 +9,12 @@ models/index.js
 Core data modesl for the Coursework tracekr & GPA Calculator 
 
 Using Plain JS Objects 
-Mirroring the SQL Tables
 
 Mackenzie 
 
 */ 
 
-/* 
-
-CREATE INSTITUITONS 
-
-*/ 
-
+/* CREATE INSTITUITONS */ 
 export function createInstitution(overrides = {}) {
     return {
         id: uuidv4(),
@@ -39,12 +33,7 @@ export function createInstitution(overrides = {}) {
     }; 
 } 
 
-/* 
-
-CREATE FOLDERS 
-
-*/ 
-
+/* CREATE FOLDERS */ 
 export function createFolder(overrides = {}){
     return {
         id: uuidv4(),
@@ -56,12 +45,7 @@ export function createFolder(overrides = {}){
 }
 
 
-/* 
-
-CREATE COURSE
-
-*/ 
-
+/* CREATE COURSE */ 
 export function createCourse(overrides = {}){
     return {
 
@@ -78,12 +62,7 @@ export function createCourse(overrides = {}){
 
 }
 
-/* 
-
-CREATE ASSIGNMENT 
-
-*/ 
-
+/* CREATE ASSIGNMENT */ 
 export function createAssignment(overrides = {}) {
     return {
         id: uuidv4(),
@@ -100,14 +79,9 @@ export function createAssignment(overrides = {}) {
     }; 
 } 
 
-/* 
-
-SIMULATION RESULT 
-
-Not stored in DB but is computed using the simuation engine and displayed in the presentation
-
-*/ 
-
+/* SIMULATION RESULT */ 
+// Not stored in DB but is computed using 
+// the simuation engine and displayed in the presentation
 export function createSimulationResult(overrides ={}){
     return{
         courseID: null, 
@@ -120,13 +94,8 @@ export function createSimulationResult(overrides ={}){
     };
 }
 
-/* 
-
-CREATE ALERT 
-
-Shown in presentation layer & generated in logic 
-
-*/ 
+/* CREATE ALERT */ 
+// Shown in presentation layer & generated in logic 
 
 export function createdAlert(overrides ={}) {
     return {
@@ -140,13 +109,8 @@ export function createdAlert(overrides ={}) {
     };
 }  
 
-/* 
-
-CREATE APP STATE 
-
-This is linked to the local storage and is what will be seralized to it 
-
-*/ 
+/* CREATE APP STATE */ 
+//This is linked to the local storage and is what will be seralized to it 
 
 export function createInitialAppState() {
     return {    
@@ -157,7 +121,6 @@ export function createInitialAppState() {
         assignments: [], 
         alerts: [], 
         settings: {
-            theme: 'dark',                      // Default to Dark Theme, but offer light 
             defaultGPAScale: '4.0', 
             lastViewedFolderID: null,           // Shows what folder was seen last by the User or not 
         } 

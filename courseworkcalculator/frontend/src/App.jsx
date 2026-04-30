@@ -21,6 +21,7 @@ import SimulationInterface from './components/simulation/gpaSimulationInterface'
 import AlertsList from './components/alerts/AlertsList';
 import GradeScalingModal from './components/folders/GradeScalingModal';
 import Icon from './utils/Icon';
+import InstitutionDashboard from './components/institutions/InstitutionDashboard';
 import { exportToJSON, importFromJSON } from './data/localStorageManager';
 import { exportToTXT, exportToPDF } from './components/settings/ImportExport';
 import { calculateSemesterGPA } from './logic/gpaCalculator';
@@ -34,9 +35,11 @@ export default function App({
     folders = [],        
     courses = [], 
     assignments = [],
+    institutions = [],
     alerts = [],
     onDismissAlert,
     onImport,
+    onResetAll,
     onAddFolder,
     onUpdateFolder,
     onDeleteFolder,
@@ -46,21 +49,28 @@ export default function App({
     onAddAssignment,
     onUpdateAssignment,
     onDeleteAssignment,
-    onResetAll,
+    onAddInstitution,
+    onUpdateInstitution,
+    onDeleteInstitution,
 
 }) {
     // Navigation state - tracks which screen we're on and what's selected
     const [selectedFolderId, setSelectedFolderId] = useState(null);
     const [selectedCourseId, setSelectedCourseId] = useState(null);
-    const [view, setView] = useState('semesters'); // 'semesters', 'courses', or 'assignments'
-    
-    // Modal visibility states
+    const [view, setView] = useState('semesters'); // 'semesters', 'courses', 'assignments', or 'institutions'
+
     const [showWeightModal, setShowWeightModal] = useState(false);
     const [showGpaSim, setShowGpaSim] = useState(false);
     const [showScaleModal, setShowScaleModal] = useState(false);
     
+    // Helper variables to make the render logic cleaner
+    const semesterCourses = courses.filter(c => c.folderID === selectedFolderId);
+    const courseAssignments = assignments.filter(a => a.courseID === selectedCourseId);
+    const currentCourse = courses.find(c => c.id === selectedCourseId);
+    const currentFolder = folders.find(f => f.id === selectedFolderId);
+    
     // Grade scale for the currently selected semester. Starts with the default +/- scale.
-    const [semesterGradeScale, setSemesterGradeScale] = useState([
+    const semesterGradeScale = currentFolder?.gradeScale || [
         { min: 93, points: 4.0, letter: "A" },
         { min: 90, points: 3.7, letter: "A-" },
         { min: 87, points: 3.3, letter: "B+" },
@@ -73,14 +83,8 @@ export default function App({
         { min: 63, points: 1.0, letter: "D" },
         { min: 60, points: 0.7, letter: "D-" },
         { min: 0, points: 0.0, letter: "F" }
-    ]);
-
-    // Helper variables to make the render logic cleaner
-    const semesterCourses = courses.filter(c => c.folderID === selectedFolderId);
-    const courseAssignments = assignments.filter(a => a.courseID === selectedCourseId);
-    const currentCourse = courses.find(c => c.id === selectedCourseId);
-    const currentFolder = folders.find(f => f.id === selectedFolderId);
-
+    ];
+    
     // Navigation functions - move between screens
     const handleOpenSemester = (folderId) => {
         setSelectedFolderId(folderId);
@@ -98,10 +102,18 @@ export default function App({
         setSelectedFolderId(null);
         setSelectedCourseId(null);
     };
+    
 
     const handleBackToCourses = () => {
         setView('courses');
         setSelectedCourseId(null);
+    };
+
+    // Handler for Institutes
+    const handleOpenInstitutions = () => {
+    setView('institutions');
+    setSelectedFolderId(null);
+    setSelectedCourseId(null);  
     };
 
     // Wrapper functions that create the right object shape for the callbacks
@@ -214,6 +226,7 @@ export default function App({
                     onExportPDF={() => exportToPDF({ courses, assignments, folders })}
                     onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={handleSelectSearchResult} 
+                    onOpenInstitutions={handleOpenInstitutions}
                     onResetAll={handleResetAndNavigate}
                 />
 
@@ -223,12 +236,28 @@ export default function App({
                 <div className="section">
                     <div className="section-header">
                         <h2 className="section-title">Semesters</h2>
-                        <button onClick={handleAddSemester} className="add-button">+ Add Semester</button>
-                    </div>
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                             {(institutions.length > 0 || folders.some(f => f.institutionID)) && (
+                                <button onClick={handleOpenInstitutions} className="settings-button"
+                                    style={{
+                                        display:    'flex',
+                                        alignItems: 'center',
+                                        gap:        '6px',
+                                    }}
+                                >
+                                     <Icon name="building" size={14} color="white" />
+                                         Institutions
+                                </button>
+                             )}
+                            <button onClick={handleAddSemester} className="add-button">+ Add Semester</button>
+                        </div>
+                 </div>
+
                     <FolderManager
                         folders={folders}
                         courses={courses}
                         assignments={assignments}
+                        institutions={institutions}
                         gradeScale={semesterGradeScale}
                         onOpenSemester={handleOpenSemester}
                         onEditFolder={onUpdateFolder}
@@ -238,7 +267,6 @@ export default function App({
                         alerts={alerts}
                         onDismiss={onDismissAlert}
                     />
-                    
 
                 </div>
             </div>
@@ -262,6 +290,7 @@ export default function App({
                     onExportPDF={() => exportToPDF({ courses, assignments, folders })}
                     onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={handleSelectSearchResult}  
+                    onOpenInstitutions={handleOpenInstitutions}
                     onResetAll={handleResetAndNavigate}
                 />
 
@@ -376,7 +405,11 @@ export default function App({
                     onSaveSimulation={(results) => {
                         console.log('Simulation results:', results);
                     }}
-                    onUpdateGradeScale={setSemesterGradeScale}
+                    onUpdateGradeScale={(newScale) => {
+                        if (selectedFolderId) {
+                            onUpdateFolder(selectedFolderId, { gradeScale: newScale });
+                        }
+                    }}
                 />
 
                 <GradeScalingModal
@@ -384,8 +417,9 @@ export default function App({
                     onClose={() => setShowScaleModal(false)}
                     currentScale={semesterGradeScale}
                     onSave={(newScale) => {
-                        setSemesterGradeScale(newScale);
-                        console.log('Saved scale for semester', currentFolder?.name, newScale);
+                        if (selectedFolderId) {
+                            onUpdateFolder(selectedFolderId, { gradeScale: newScale });
+                        }
                     }}
                     semesterName={currentFolder?.name}
                 />
@@ -410,6 +444,7 @@ export default function App({
                     onExportPDF={() => exportToPDF({ courses, assignments, folders })}
                     onImport={(file) => importFromJSON(file).then(onImport)}
                     onSelectResult={handleSelectSearchResult}  
+                    onOpenInstitutions={handleOpenInstitutions}
                     onResetAll={handleResetAndNavigate}
                 />
 
@@ -478,6 +513,54 @@ export default function App({
                 />
             </div>
          </>
+        );
+    }
+
+    // ========== INSTITUTIONS VIEW ==========
+    // Mirroring the previous views & connecting Angie's Institute.jsx
+    if (view === 'institutions') {
+        return (
+            <>
+                <Dashboard
+                    courses={courses}
+                    assignments={assignments}
+                    folders={folders}
+                    onBackToHome={handleBackToSemesters}
+                    onExportJSON={() => exportToJSON({ courses, assignments, folders, institutions })}
+                    onExportTXT={() => exportToTXT({ courses, assignments, folders })}
+                    onExportPDF={() => exportToPDF({ courses, assignments, folders })}
+                    onImport={(file) => importFromJSON(file).then(onImport)}
+                    onSelectResult={handleSelectSearchResult}
+                    onOpenInstitutions={handleOpenInstitutions}
+                    onResetAll={onResetAll}
+                />
+
+                <div className="container">
+                    <button onClick={handleBackToSemesters}
+                        className="back-button"
+                        style={{
+                            display:    'flex',
+                            alignItems: 'center',
+                            gap:        '6px',
+                        }}
+                    >
+                        <Icon name="back" size={14} color="white" />
+                        Back to Semesters
+                    </button>
+
+                   <InstitutionDashboard
+                        institutions={institutions}
+                        folders={folders}
+                        courses={courses}
+                        assignments={assignments}
+                        gradeScale={semesterGradeScale}
+                        onAddInstitution={onAddInstitution}
+                        onUpdateInstitution={onUpdateInstitution}
+                        onDeleteInstitution={onDeleteInstitution}
+                        onOpenSemester={handleOpenSemester}
+                    />
+                </div>
+            </>
         );
     }
 
