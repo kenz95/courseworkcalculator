@@ -15,6 +15,8 @@ Edits by Mackenzie for updated UI/UX & any connections
 
 import { useState } from 'react';
 import { calculateSemesterGPA } from '../../logic/gpaCalculator';
+import Icon from '../../utils/Icon';
+
 
 export default function FolderManager({
     folders = [],
@@ -57,7 +59,10 @@ export default function FolderManager({
     };
 
     if (folders.length === 0) {
-        return <p className="empty-message">No semesters yet. Click "+ Add Semester" to begin.</p>;
+        return <p className="empty-message" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+            <Icon name="book" size={20} color="muted" />
+            No semesters yet. Click "+ Add Semester" to begin.
+            </p>;
     }
 
     return (
@@ -123,7 +128,7 @@ export default function FolderManager({
                                         </div>
                                     )}
                                 </div>
-                                
+
                                 {/* Institution name (only shows if semester is assigned to one) */}
                                 {folder.institutionID && (() => {
                                 const inst = institutions.find(i => i.id === folder.institutionID);

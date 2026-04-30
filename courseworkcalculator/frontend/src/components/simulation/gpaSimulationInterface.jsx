@@ -6,7 +6,7 @@ CSCI 3300
 
 gpaSimulationInterface.jsx 
 
-Mason
+Mason 
 
 */
 
@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react';
 import { simulateGPA, formatSimulationResults } from "../../logic/gpaSimulationEngine";
 import { getDefaultGradeScale } from '../../logic/gradeCalculator';
 import './gpaSimulationInterface.css';
+import Icon from '../../utils/Icon';
 
 export default function GpaSimulation({ 
     isOpen, 
@@ -166,7 +167,9 @@ export default function GpaSimulation({
                         <div className="sim-modal-body">
                             {simulationResults?.impossible ? (
                                 <div className="results-card impossible">
-                                    <div className="results-icon">⚠️</div>
+                                    <div className="results-icon">
+                                        <Icon name="warning" size={48} color="white" />
+                                    </div>
                                     <h3>Cannot Reach Target GPA</h3>
                                     <p>Target GPA: <strong>{simulationResults.target}</strong></p>
                                     <p>Maximum possible GPA: <strong>{simulationResults.maxPossibleGPA?.toFixed(2)}</strong></p>
@@ -174,9 +177,11 @@ export default function GpaSimulation({
                             ) : (
                                 <>
                                     <div className="results-card success">
-                                        <div className="results-icon">🎯</div>
+                                        <div className="results-icon">
+                                            <Icon name="target" size={48} color="white" />
+                                         </div>
                                         <h3>Required Grades to Reach GPA of {simulationResults.target}</h3>
-                                        
+
                                         <div className="results-list">
                                             {simulationResults.items?.map((item, idx) => {
                                                 if (item.type === 'locked') {
@@ -210,7 +215,10 @@ export default function GpaSimulation({
                                         
                                         <div className="results-footer">
                                             <div className="final-gpa">
-                                                📈 Resulting GPA: <strong>{simulationResults.finalGPA}</strong>
+                                                <span style={{ marginRight: '10px', verticalAlign: 'center' }}>
+                                                    <Icon name="trending-up" size={40} color="white" />
+                                                </span>
+                                                Resulting GPA: <strong>{simulationResults.finalGPA}</strong>
                                             </div>
                                         </div>
                                     </div>

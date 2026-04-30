@@ -12,19 +12,24 @@ Reusable SVG icon components across the application
 */
 
 // Import all ICONS fro assets 
-import homeIcon     from '../assets/home.svg';
-import chartIcon    from '../assets/chart.svg';
-import gradeIcon    from '../assets/grade.svg';
-import plusIcon     from '../assets/plus.svg';
-import backIcon     from '../assets/back.svg';
-import settingsIcon from '../assets/settings.svg';
-import githubIcon   from '../assets/github.svg';
-import searchIcon   from '../assets/search.svg';
-import warningIcon  from '../assets/warning.svg';
-import errorIcon    from '../assets/error.svg';
-import infoIcon     from '../assets/info.svg';
-import trashIcon    from '../assets/trash.svg';
-import buildingIcon from '../assets/building.svg';
+import homeIcon         from '../assets/home.svg';
+import chartIcon        from '../assets/chart.svg';
+import gradeIcon        from '../assets/grade.svg';
+import plusIcon         from '../assets/plus.svg';
+import backIcon         from '../assets/back.svg';
+import settingsIcon     from '../assets/settings.svg';
+import githubIcon       from '../assets/github.svg';
+import searchIcon       from '../assets/search.svg';
+import warningIcon      from '../assets/warning.svg';
+import errorIcon        from '../assets/error.svg';
+import infoIcon         from '../assets/info.svg';
+import downloadIcon     from '../assets/download.svg';
+import uploadIcon       from '../assets/upload.svg';
+import targetIcon       from '../assets/target.svg';
+import trendingUpIcon   from '../assets/trending-up.svg';
+import trashIcon        from '../assets/trash.svg';
+import buildingIcon     from '../assets/building.svg';
+import bookIcon         from '../assets/book.svg';
 
 // Declare the Icons
 const icons = {
@@ -39,8 +44,13 @@ const icons = {
   warning:  warningIcon,
   error:    errorIcon,
   info:     infoIcon,
+  download: downloadIcon,    
+  upload:   uploadIcon, 
+  target:   targetIcon,
+  'trending-up': trendingUpIcon,
   trash:    trashIcon,
-  building: buildingIcon
+  building: buildingIcon,
+  book:     bookIcon,
 
 };
 

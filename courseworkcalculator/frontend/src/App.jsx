@@ -68,7 +68,7 @@ export default function App({
     const courseAssignments = assignments.filter(a => a.courseID === selectedCourseId);
     const currentCourse = courses.find(c => c.id === selectedCourseId);
     const currentFolder = folders.find(f => f.id === selectedFolderId);
-    
+
     // Grade scale for the currently selected semester. Starts with the default +/- scale.
     const semesterGradeScale = currentFolder?.gradeScale || [
         { min: 93, points: 4.0, letter: "A" },
@@ -231,7 +231,12 @@ export default function App({
                 />
 
             <div className="container">
-                <h1 className="title"> Coursework Tracker & GPA Calculator </h1>
+                <h1 className="title"> 
+                    <span style={{ marginRight: '12px', verticalAlign: 'center' }}>
+                           <Icon name="book" size={28} color="dark" />
+                    </span>
+                        Coursework Tracker & GPA Calculator 
+                </h1>
                 
                 <div className="section">
                     <div className="section-header">

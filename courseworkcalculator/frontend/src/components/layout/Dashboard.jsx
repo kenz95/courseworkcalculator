@@ -72,14 +72,14 @@ export default function Dashboard({
         // Two-step confirmation -- destructive and irreversible
         const confirmed = window.confirm(
             'Are you sure you want to delete ALL application data?\n\n' +
-            'This will permanently remove every semester, course, and assignment. ' +
+            'This will permanently remove every institution, semester, course, and assignment. ' +
             'This action CANNOT be undone.\n\n' +
             'Tip: Export a backup first if you might want this data later.'
         );
         if (!confirmed) return;
     
         const reallyConfirmed = window.confirm(
-         'Last chance! Click OK to permanently delete all data.'
+         'Last chance! Click OK to permanently Delete ALL data.'
         );
             if (!reallyConfirmed) return;
     
@@ -209,20 +209,29 @@ export default function Dashboard({
             {/* Export */}
             <div style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #334155' }}>
               <p style={{ color: '#64748b', fontSize: '0.72rem', margin: '0 0 0.5rem', letterSpacing: '0.05em' }}>
-                EXPORT DATA
+                    EXPORT DATA
               </p>
               <div style={{ display: 'flex', gap: '6px' }}>
                 <button onClick={() => { onExportJSON?.(); setMenuOpen(false); }}
                   style={{ ...btnBase, background: '#312e81', color: '#a5b4fc', border: '1px solid #4338ca' }}>
-                  JSON
+                        <span style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                            <Icon name="download" size={14} color="white" />
+                        </span>
+                        JSON
                 </button>
                 <button onClick={() => { onExportTXT?.(); setMenuOpen(false); }}
                   style={{ ...btnBase, background: '#064e3b', color: '#6ee7b7', border: '1px solid #059669' }}>
-                  TXT
+                         <span style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                            <Icon name="download" size={14} color="white" />
+                        </span>
+                        TXT
                 </button>
                 <button onClick={() => { onExportPDF?.(); setMenuOpen(false); }}
                   style={{ ...btnBase, background: '#7f1d1d', color: '#fca5a5', border: '1px solid #dc2626' }}>
-                  PDF
+                        <span style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                            <Icon name="download" size={14} color="white" />
+                        </span>
+                         PDF
                 </button>
               </div>
             </div>
@@ -234,7 +243,10 @@ export default function Dashboard({
               </p>
               <button onClick={handleImportClick}
                 style={{ ...btnBase, background: '#1d4ed8', color: '#bfdbfe', border: '1px solid #3b82f6', width: '100%', padding: '6px 0' }}>
-                Import JSON Backup
+                    <span style={{ marginRight: '8px', verticalAlign: 'middle' }}>
+                        <Icon name="upload" size={14} color="white" />
+                    </span>
+                    Import JSON Backup
               </button>
             </div>
 
