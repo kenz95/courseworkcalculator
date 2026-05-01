@@ -156,5 +156,5 @@ courseworkcalculator/
 
 ## License
 
-Default copyright: All rights reserved. © Group Two, University of North Georgia, Spring 2026.
+Default copyright: All rights reserved.
 
