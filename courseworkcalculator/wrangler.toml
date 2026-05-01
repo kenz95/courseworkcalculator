@@ -1,4 +1,4 @@
-name = "courseworkcalcalculator"
+name = "courseworkcalculator"
 main = "src/worker.js"
 compatibility_date = "2026-04-02"
 
