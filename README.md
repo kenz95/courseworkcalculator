@@ -7,7 +7,7 @@ A web-based grade tracking and GPA simulation tool for students, professors, aca
 
 ---
 
-## Team: **CSCI 3300 Software Engineering** Group Two
+## Team
 
 | Member | Primary Contributions |
 |--------|----------------------|
