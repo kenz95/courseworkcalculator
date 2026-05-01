@@ -9,7 +9,7 @@ A web-based grade tracking and GPA simulation tool for students, professors, aca
 
 ## Academic Context
 
-Developed for **CSCI 3300 — Software Engineering**, taught by Dr. Porter at the University of North Georgia (Spring 2026). The project fulfills the semester-long product development assignment, applying concepts from Sommerville's *Engineering Software Products* through three two-week sprints. Architecture, requirements engineering, sprint planning, and integration practices follow textbook methodology.
+Developed for **CSCI 3300 — Software Engineering**, taught by Dr. Porter at the University of North Georgia. The project fulfills the semester-long product development assignment, applying concepts from Sommerville's *Engineering Software Products* through three two-week sprints. Architecture, requirements engineering, sprint planning, and integration practices follow textbook methodology.
 
 ---
 
