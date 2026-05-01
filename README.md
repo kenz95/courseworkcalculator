@@ -13,7 +13,7 @@ Developed for **CSCI 3300 — Software Engineering**, taught by Dr. Porter at th
 
 ---
 
-## Team — Group Two
+## Team: Group Two
 
 | Member | Primary Contributions |
 |--------|----------------------|
