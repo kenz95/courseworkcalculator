@@ -11,15 +11,18 @@ Mason
 /* src/styles/GradeManager.css - Global styles for the entire app */
 
 /* GradeManager styles */
-body { margin: 0; font-family: Arial, sans-serif; }
+body { 
+  margin: 0; 
+  font-family: Arial, sans-serif; 
+}
 
 
 .container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  background-attachment: fixed;
   min-height: 100vh;
 }
 
@@ -27,7 +30,9 @@ body { margin: 0; font-family: Arial, sans-serif; }
   font-size: 28px;
   font-weight: 600;
   margin-bottom: 30px;
-  color: #1a1a1a;
+  color: #f1f5f9;
+  text-shadow: 0 0 24px rgba(129, 140, 248, 0.4);
+  letter-spacing: -0.01em;
   border-bottom: 2px solid #e0e0e0;
   padding-bottom: 10px;
 }
@@ -326,4 +331,63 @@ body { margin: 0; font-family: Arial, sans-serif; }
 
 .btn-secondary:hover {
   background-color: #5a6268;
+}
+
+/* MOBILE VIEW STYLES */
+@media (max-width: 768px) {
+
+    /* Title: reduce size, prevent overflow */
+    .title {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+
+    /* Section headers: stack title and buttons vertically */
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .section-header .button-group {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    /* Buttons in section headers: equal-width, easier tap targets */
+    .section-header .add-button,
+    .section-header .settings-button {
+        flex: 1;
+        min-height: 44px;
+        font-size: 14px;
+    }
+
+    /* Cards grid: single column on mobile */
+    .grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Section padding: tighter to maximize content space */
+    .section {
+        padding: 16px;
+    }
+
+    /* Container: less horizontal padding */
+    .container {
+        padding: 16px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .title {
+        font-size: 1.25rem;
+    }
+
+    /* Hide GitHub button on very small screens to save space */
+    .nav-bar .github-button {
+        display: none;
+    }
 }

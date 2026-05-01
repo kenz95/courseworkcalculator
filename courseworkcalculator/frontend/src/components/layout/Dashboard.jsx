@@ -98,10 +98,21 @@ export default function Dashboard({
     border:       'none',
   };
 
+  /* Mobile & Adapatable styles */
+  const responsiveStyles = `
+    @media (max-width: 768px) {
+        .nav-label { display: none; }
+        .nav-btn { padding: 0.45rem 0.6rem; }
+    }
+    @media (max-width: 480px) {
+        .github-link { display: none !important; }
+    }
+  `;
+
   return (
     <nav style={{
-         background:     '#000066',
-        borderBottom:   '2px solid #e6b800',
+        background:     '#230679',
+        borderBottom:   '2px solid #818cf8',
         padding:        '0.65rem 1.25rem',
         display:        'grid',
         gridTemplateColumns: 'auto 1fr auto auto',
@@ -110,28 +121,31 @@ export default function Dashboard({
         minHeight:      '52px',
     }}>
 
+      {/* For Mobile Views*/}
+      <style>{responsiveStyles}</style>
+
       {/* Home */}
       <button
+        className="nav-btn"
         onClick={onBackToHome}
         style={{
           display:      'flex',
           alignItems:   'center',
           gap:          '6px',
           background:   '#818cf8',
-          color:        '#000066',
+          color:        '#010151',
           padding:      '0.45rem 1rem',
           borderRadius: '8px',
-          border:       '2px solid #e6b800',
+          border:       '2px solid #d4d8fa',
           fontWeight:   '500',
           fontSize:     '0.85rem',
           cursor:       'pointer',
           whiteSpace:   'nowrap',
         }}
       >
-     <Icon name="home" size={16} color="dark" />
-        Home 
-
-        </button>
+         <Icon name="home" size={16} color="dark"/>
+        <span className="nav-label"> Home </span>
+      </button>
 
       {/*  Search  */}
       <div style={{ flex: 1 }}>
@@ -151,6 +165,7 @@ export default function Dashboard({
         <a href="https://github.com/kenz95/courseworkcalculator"
         target="_blank"
         rel="noreferrer"
+        className="nav-btn"
         style={{
           display:        'flex',
           alignItems:     'center',
@@ -160,27 +175,27 @@ export default function Dashboard({
           textDecoration: 'none',
           whiteSpace:     'nowrap',
           padding:        '0.4rem 0.75rem',
-          border:         '1px solid #334155',
+          border:         '1.5px solid #222f41',
           borderRadius:   '6px',
           background:     '#1e293b',
         }}
       >
-       <Icon name="github" size={14} color="blue" />
-
-        GitHub
+          <Icon name="github" size={14} color="blue"/>
+          <span className="nav-label"> GitHub </span>
       </a>
 
       {/*  Settings Dropdown  */}
       <div ref={menuRef} style={{ position: 'relative' }}>
         <button
+          className="nav-btn"
           onClick={() => setMenuOpen(prev => !prev)}
           style={{
             display:      'flex',
             alignItems:   'center',
             gap:          '6px',
             background:   menuOpen ? '#334155' : '#1e293b',
-            border:       '1px solid #334155',
-            color:        '#a5b4fc',
+            border:       '1.5px solid #222f41',
+            color:        '#66c2ff',
             padding:      '0.4rem 0.9rem',
             borderRadius: '6px',
             cursor:       'pointer',
@@ -188,9 +203,8 @@ export default function Dashboard({
             whiteSpace:   'nowrap',
           }}
         >
-         <Icon name="settings" size={14} color="blue" />
-         
-          Settings ▾
+          <Icon name="settings" size={14} color="blue"/>
+          <span className="nav-label"> Settings ▾ </span>
         </button>
 
         {menuOpen && (
@@ -220,14 +234,14 @@ export default function Dashboard({
                         JSON
                 </button>
                 <button onClick={() => { onExportTXT?.(); setMenuOpen(false); }}
-                  style={{ ...btnBase, background: '#064e3b', color: '#6ee7b7', border: '1px solid #059669' }}>
+                  style={{ ...btnBase, background: '#06434e', color: '#87d3e4', border: '1px solid #037053' }}>
                          <span style={{ marginRight: '8px', verticalAlign: 'middle' }}>
                             <Icon name="download" size={14} color="white" />
                         </span>
                         TXT
                 </button>
                 <button onClick={() => { onExportPDF?.(); setMenuOpen(false); }}
-                  style={{ ...btnBase, background: '#7f1d1d', color: '#fca5a5', border: '1px solid #dc2626' }}>
+                  style={{ ...btnBase, background: '#1d607f', color: '#a5cefc', border: '1px solid #2699dc' }}>
                         <span style={{ marginRight: '8px', verticalAlign: 'middle' }}>
                             <Icon name="download" size={14} color="white" />
                         </span>

@@ -60,6 +60,7 @@ const filters = {
   blue:   'brightness(0) saturate(100%) invert(62%) sepia(80%) saturate(400%) hue-rotate(180deg)',
   purple: 'brightness(0) saturate(100%) invert(55%) sepia(50%) saturate(500%) hue-rotate(220deg)',
   dark:   'brightness(0)',
+  indigo: 'brightness(0) saturate(100%) invert(58%) sepia(70%) saturate(2000%) hue-rotate(220deg) brightness(95%)',
   muted:  'brightness(0) saturate(0%) invert(60%)',
   red: 'brightness(0) saturate(100%) invert(75%) sepia(50%) saturate(700%) hue-rotate(330deg)',
 };

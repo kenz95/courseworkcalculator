@@ -71,7 +71,7 @@ function MainApp() {
     // Check API Status 
     useEffect(() => {
         checkAPIStatus().then(online => {
-            console.log('API status:', online ? 'Connected ✅' : 'Offline ❌');
+            console.log('API status:', online ? 'Connected ' : 'Offline ');
         });
     }, []);
 
@@ -211,6 +211,7 @@ function MainApp() {
         setCourses([]);
         setAssignments([]);
         setAlerts([]);
+        setInstitutions([]); 
     };
 
     return (

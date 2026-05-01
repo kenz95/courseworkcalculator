@@ -234,9 +234,6 @@ export default function App({
 
             <div className="container">
                 <h1 className="title"> 
-                    <span style={{ marginRight: '12px', verticalAlign: 'center' }}>
-                           <Icon name="book" size={28} color="dark" />
-                    </span>
                         Coursework Tracker & GPA Calculator 
                 </h1>
                 
